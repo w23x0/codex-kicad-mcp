@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 420" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13">
+  <!-- Title -->
+  <text x="24" y="30" font-size="17" font-weight="600">Codex KiCad MCP — architecture (read-first)</text>
+
+  <!-- MCP host -->
+  <rect x="24" y="56" width="180" height="86" rx="10" fill="#eef2ff" stroke="#6366f1"/>
+  <text x="114" y="82" text-anchor="middle" font-weight="600">MCP host</text>
+  <text x="114" y="102" text-anchor="middle">Codex / Claude</text>
+  <text x="114" y="120" text-anchor="middle">VS Code / Cursor</text>
+
+  <!-- Server surface -->
+  <rect x="280" y="48" width="240" height="102" rx="10" fill="#f0fdf4" stroke="#16a34a"/>
+  <text x="400" y="72" text-anchor="middle" font-weight="600">codex-kicad-mcp (stdio)</text>
+  <text x="400" y="94" text-anchor="middle">28 tools · 9 resources</text>
+  <text x="400" y="112" text-anchor="middle">7 prompts</text>
+  <text x="400" y="132" text-anchor="middle">KICAD_WORKSPACE boundary</text>
+
+  <!-- Analysis layer -->
+  <rect x="596" y="48" width="240" height="102" rx="10" fill="#fff7ed" stroke="#ea580c"/>
+  <text x="716" y="72" text-anchor="middle" font-weight="600">Analysis layer</text>
+  <text x="716" y="94" text-anchor="middle">power · decoupling · parity</text>
+  <text x="716" y="112" text-anchor="middle">si · manufacturing · layout</text>
+  <text x="716" y="132" text-anchor="middle">findings envelope (severity+confidence)</text>
+
+  <!-- Parsing layer -->
+  <rect x="280" y="206" width="240" height="102" rx="10" fill="#eff6ff" stroke="#2563eb"/>
+  <text x="400" y="230" text-anchor="middle" font-weight="600">Parsing layer</text>
+  <text x="400" y="252" text-anchor="middle">bounded S-expression parser</text>
+  <text x="400" y="270" text-anchor="middle">schematic · pcb · hierarchy · buses</text>
+  <text x="400" y="288" text-anchor="middle">netlist · bom (CLI exports)</text>
+
+  <!-- Write pipeline -->
+  <rect x="596" y="206" width="240" height="102" rx="10" fill="#fef2f2" stroke="#dc2626"/>
+  <text x="716" y="230" text-anchor="middle" font-weight="600">Write pipeline (opt-in)</text>
+  <text x="716" y="252" text-anchor="middle">preview → confirm → apply</text>
+  <text x="716" y="270" text-anchor="middle">snapshot · lock · hash re-check</text>
+  <text x="716" y="288" text-anchor="middle">append-only audit log</text>
+
+  <!-- KiCad -->
+  <rect x="280" y="356" width="240" height="44" rx="10" fill="#f5f5f4" stroke="#57534e"/>
+  <text x="400" y="376" text-anchor="middle" font-weight="600">kicad-cli 10.x</text>
+  <text x="400" y="392" text-anchor="middle">netlist · bom · ERC · DRC (JSON)</text>
+
+  <!-- Design files -->
+  <rect x="596" y="356" width="240" height="44" rx="10" fill="#f5f5f4" stroke="#57534e"/>
+  <text x="716" y="376" text-anchor="middle" font-weight="600">KiCad project files</text>
+  <text x="716" y="392" text-anchor="middle">.kicad_pro / _sch / _pcb (read-only by default)</text>
+
+  <!-- Edges -->
+  <g stroke="#334155" stroke-width="1.6" fill="none">
+    <path d="M204 99 H 280"/>
+    <path d="M400 150 V 206"/>
+    <path d="M520 99 H 596"/>
+    <path d="M716 150 V 206" stroke-dasharray="5 4"/>
+    <path d="M400 308 V 356"/>
+    <path d="M716 308 V 356" stroke-dasharray="5 4"/>
+    <path d="M716 308 L 620 392" opacity="0"/>
+  </g>
+  <!-- Write path: analysis/pipeline to files only after opt-in -->
+  <g stroke="#dc2626" stroke-width="1.6" fill="none">
+    <path d="M716 308 V 356"/>
+  </g>
+
+  <!-- Labels on edges -->
+  <text x="242" y="92" text-anchor="middle" fill="#475569">stdio</text>
+  <text x="558" y="92" text-anchor="middle" fill="#475569">envelopes</text>
+  <text x="558" y="262" text-anchor="middle" fill="#475569">plans</text>
+  <text x="424" y="340" fill="#475569">subprocess</text>
+  <text x="742" y="340" fill="#b91c1c">KICAD_ENABLE_WRITES=1</text>
+</svg>

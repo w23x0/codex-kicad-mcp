@@ -1,0 +1,1 @@
+"""Codex KiCad MCP server."""

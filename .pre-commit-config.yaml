@@ -1,0 +1,21 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    # Ruff version tracked against mcp/pyproject.toml dev dependencies.
+    rev: v0.16.6
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+        files: ^(mcp/)?(src|tests|scripts)/.*\.py$
+      - id: ruff-format
+        files: ^(mcp/)?(src|tests|scripts)/.*\.py$
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: end-of-file-fixer
+        files: ^(docs|catalog|scripts)/|^(README|CHANGELOG|CONTRIBUTING|SECURITY|CODE_OF_CONDUCT)\.md$
+      - id: trailing-whitespace
+        files: ^(docs|catalog|scripts)/|^(README|CHANGELOG|CONTRIBUTING|SECURITY|CODE_OF_CONDUCT)\.md$
+      - id: check-yaml
+      - id: check-json
+        exclude: ^mcp/tests/fixtures/
+      - id: check-added-large-files

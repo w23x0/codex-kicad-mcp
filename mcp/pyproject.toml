@@ -1,0 +1,139 @@
+[project]
+name = "codex-kicad-mcp"
+version = "0.2.0"
+description = "A safe, read-first MCP server for KiCad workflows in Codex."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Codex KiCad contributors" }]
+keywords = ["kicad", "mcp", "eda", "pcb", "schematic", "erc", "drc", "model-context-protocol"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Manufacturing",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Electronic Design Automation (EDA)",
+    "Typing :: Typed",
+]
+dependencies = ["mcp>=1.9,<2"]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "pytest-cov>=5",
+    "ruff>=0.6",
+    "mypy>=1.11",
+    "build>=1.2",
+]
+
+[project.urls]
+Homepage = "https://github.com/codex-kicad/Codex-KiCad"
+Repository = "https://github.com/codex-kicad/Codex-KiCad"
+Changelog = "https://github.com/codex-kicad/Codex-KiCad/blob/main/CHANGELOG.md"
+Issues = "https://github.com/codex-kicad/Codex-KiCad/issues"
+Docs = "https://github.com/codex-kicad/Codex-KiCad/tree/main/docs"
+
+[project.scripts]
+codex-kicad-mcp = "codex_kicad_mcp.server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/codex_kicad_mcp"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = [
+    "error::DeprecationWarning:codex_kicad_mcp",
+]
+
+[tool.coverage.run]
+source = ["src/codex_kicad_mcp"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+# The subprocess-heavy CLI adapter and the FastMCP registration surface are
+# exercised through integration tests that CI runs without coverage; keep the
+# report focused on unit-covered lines rather than failing on those modules.
+exclude_also = [
+    "if __name__ == .__main__.:",
+    "def main\\(\\) -> None:",
+]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+src = ["src", "tests"]
+extend-exclude = ["tests/fixtures"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # bugbear
+    "UP",  # pyupgrade
+    "SIM", # simplify
+    "RUF", # ruff-specific
+]
+ignore = [
+    # E501 is handled by the formatter; long netlist fixture lines stay.
+    "E501",
+    # `assert` is a documented contract inside review analyzers and tests.
+    "S101",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Fixtures embed real KiCad exports with long lines and unused text.
+"tests/fixtures/*" = ["ALL"]
+# Test imports re-use fixtures across modules by design.
+"tests/*" = ["B011"]
+# pytest fixtures are injected by parameter name, so a test parameter that
+# shadows the module-level ``from test_server import workspace`` import is the
+# required pattern, not a redefinition bug.
+"tests/test_*" = ["F811"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.mypy]
+python_version = "3.10"
+strict = false
+warn_unused_ignores = true
+warn_redundant_casts = true
+no_implicit_optional = true
+check_untyped_defs = true
+
+[[tool.mypy.overrides]]
+# The MCP SDK ships no type stubs for every release we support; the server
+# surface is integration-tested instead.
+module = "mcp.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+# JSON-backed dict payloads flow through the analyzers as dict[str, Any];
+# tightening these modules is planned after the typed data layer lands.
+# Listed per-file because ``dict.get`` widens to ``object`` across S-expression
+# and envelope boundaries, which strict-but-untyped checks flag everywhere.
+module = [
+    "codex_kicad_mcp.analysis.*",
+    "codex_kicad_mcp.board",
+    "codex_kicad_mcp.diagnostics",
+    "codex_kicad_mcp.hierarchy",
+    "codex_kicad_mcp.pcb",
+    "codex_kicad_mcp.project",
+]
+disallow_untyped_defs = false
+disable_error_code = ["union-attr", "arg-type", "assignment", "attr-defined", "misc", "dict-item", "return-value"]

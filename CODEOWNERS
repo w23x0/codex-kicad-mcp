@@ -1,0 +1,13 @@
+# CODEOWNERS — review requirements for this repository.
+# https://docs.github.com/en/repositories/managing-a-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+* @codex-kicad/core
+
+# Server code and tests require core review.
+/mcp/ @codex-kicad/core
+
+# Catalog changes affect the registration contract.
+/catalog/ @codex-kicad/core
+
+# CI and release infrastructure.
+/.github/ @codex-kicad/core

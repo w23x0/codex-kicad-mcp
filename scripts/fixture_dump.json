@@ -1,0 +1,1708 @@
+{
+ "schematic": {
+  "project": "demo.kicad_pro",
+  "path": "demo.kicad_sch",
+  "metadata": {
+   "version": "20250114",
+   "generator": "eeschema",
+   "title": "Codex KiCad demo fixture",
+   "date": "2026-09-07",
+   "revision": "A1",
+   "company": "Codex KiCad"
+  },
+  "symbols": [
+   {
+    "reference": "U1",
+    "value": "MCU_8PIN",
+    "libId": "fixture:MCU_8PIN",
+    "uuid": "a1b2c3d4-0000-4000-8000-000000000010",
+    "position": {
+     "x": 101.6,
+     "y": 88.9,
+     "angle": 0.0
+    },
+    "properties": {
+     "Reference": "U1",
+     "Value": "MCU_8PIN",
+     "Footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+     "Datasheet": "",
+     "Description": ""
+    }
+   },
+   {
+    "reference": "#PWR01",
+    "value": "VCC",
+    "libId": "power:VCC",
+    "uuid": "a1b2c3d4-0000-4000-8000-000000000031",
+    "position": {
+     "x": 101.6,
+     "y": 76.2,
+     "angle": 0.0
+    },
+    "properties": {
+     "Reference": "#PWR01",
+     "Value": "VCC",
+     "Footprint": "",
+     "Datasheet": "",
+     "Description": ""
+    }
+   },
+   {
+    "reference": "#PWR02",
+    "value": "GND",
+    "libId": "power:GND",
+    "uuid": "a1b2c3d4-0000-4000-8000-000000000032",
+    "position": {
+     "x": 101.6,
+     "y": 101.6,
+     "angle": 0.0
+    },
+    "properties": {
+     "Reference": "#PWR02",
+     "Value": "GND",
+     "Footprint": "",
+     "Datasheet": "",
+     "Description": ""
+    }
+   },
+   {
+    "reference": "C1",
+    "value": "100nF",
+    "libId": "Device:C",
+    "uuid": "a1b2c3d4-0000-4000-8000-000000000021",
+    "position": {
+     "x": 63.5,
+     "y": 90.17,
+     "angle": 0.0
+    },
+    "properties": {
+     "Reference": "C1",
+     "Value": "100nF",
+     "Datasheet": "",
+     "Description": ""
+    }
+   },
+   {
+    "reference": "#PWR03",
+    "value": "GND",
+    "libId": "power:GND",
+    "uuid": "a1b2c3d4-0000-4000-8000-000000000035",
+    "position": {
+     "x": 63.5,
+     "y": 96.52,
+     "angle": 0.0
+    },
+    "properties": {
+     "Reference": "#PWR03",
+     "Value": "GND",
+     "Footprint": "",
+     "Datasheet": "",
+     "Description": ""
+    }
+   },
+   {
+    "reference": "C2",
+    "value": "10uF",
+    "libId": "Device:C",
+    "uuid": "a1b2c3d4-0000-4000-8000-000000000022",
+    "position": {
+     "x": 127.0,
+     "y": 90.17,
+     "angle": 0.0
+    },
+    "properties": {
+     "Reference": "C2",
+     "Value": "10uF",
+     "Datasheet": "",
+     "Description": ""
+    }
+   },
+   {
+    "reference": "#PWR04",
+    "value": "VCC",
+    "libId": "power:VCC",
+    "uuid": "a1b2c3d4-0000-4000-8000-000000000033",
+    "position": {
+     "x": 127.0,
+     "y": 86.36,
+     "angle": 0.0
+    },
+    "properties": {
+     "Reference": "#PWR04",
+     "Value": "VCC",
+     "Footprint": "",
+     "Datasheet": "",
+     "Description": ""
+    }
+   },
+   {
+    "reference": "#PWR05",
+    "value": "GND",
+    "libId": "power:GND",
+    "uuid": "a1b2c3d4-0000-4000-8000-000000000034",
+    "position": {
+     "x": 127.0,
+     "y": 96.52,
+     "angle": 0.0
+    },
+    "properties": {
+     "Reference": "#PWR05",
+     "Value": "GND",
+     "Footprint": "",
+     "Datasheet": "",
+     "Description": ""
+    }
+   },
+   {
+    "reference": "R1",
+    "value": "10k",
+    "libId": "Device:R",
+    "uuid": "a1b2c3d4-0000-4000-8000-000000000023",
+    "position": {
+     "x": 63.5,
+     "y": 97.79,
+     "angle": 90.0
+    },
+    "properties": {
+     "Reference": "R1",
+     "Value": "10k",
+     "Datasheet": "",
+     "Description": ""
+    }
+   },
+   {
+    "reference": "#FLG01",
+    "value": "PWR_FLAG",
+    "libId": "power:PWR_FLAG",
+    "uuid": "a1b2c3d4-0000-4000-8000-000000000071",
+    "position": {
+     "x": 106.68,
+     "y": 76.2,
+     "angle": 0.0
+    },
+    "properties": {
+     "Reference": "#FLG01",
+     "Value": "PWR_FLAG",
+     "Footprint": "",
+     "Datasheet": "~",
+     "Description": "Special symbol for letting ERC know the rail is driven"
+    }
+   },
+   {
+    "reference": "#FLG02",
+    "value": "PWR_FLAG",
+    "libId": "power:PWR_FLAG",
+    "uuid": "a1b2c3d4-0000-4000-8000-000000000072",
+    "position": {
+     "x": 106.68,
+     "y": 101.6,
+     "angle": 0.0
+    },
+    "properties": {
+     "Reference": "#FLG02",
+     "Value": "PWR_FLAG",
+     "Footprint": "",
+     "Datasheet": "~",
+     "Description": "Special symbol for letting ERC know the rail is driven"
+    }
+   }
+  ],
+  "labels": [
+   {
+    "kind": "label",
+    "text": "CLK",
+    "position": {
+     "x": 87.63,
+     "y": 83.82
+    }
+   },
+   {
+    "kind": "label",
+    "text": "D[1..0]",
+    "position": {
+     "x": 86.36,
+     "y": 88.9
+    }
+   }
+  ],
+  "wires": [
+   {
+    "points": [
+     {
+      "x": 101.6,
+      "y": 78.74
+     },
+     {
+      "x": 101.6,
+      "y": 76.2
+     }
+    ]
+   },
+   {
+    "points": [
+     {
+      "x": 101.6,
+      "y": 99.06
+     },
+     {
+      "x": 101.6,
+      "y": 101.6
+     }
+    ]
+   },
+   {
+    "points": [
+     {
+      "x": 91.44,
+      "y": 83.82
+     },
+     {
+      "x": 87.63,
+      "y": 83.82
+     }
+    ]
+   },
+   {
+    "points": [
+     {
+      "x": 91.44,
+      "y": 86.36
+     },
+     {
+      "x": 88.9,
+      "y": 86.36
+     }
+    ]
+   },
+   {
+    "points": [
+     {
+      "x": 91.44,
+      "y": 88.9
+     },
+     {
+      "x": 88.9,
+      "y": 88.9
+     }
+    ]
+   },
+   {
+    "points": [
+     {
+      "x": 91.44,
+      "y": 93.98
+     },
+     {
+      "x": 88.9,
+      "y": 93.98
+     }
+    ]
+   },
+   {
+    "points": [
+     {
+      "x": 88.9,
+      "y": 93.98
+     },
+     {
+      "x": 88.9,
+      "y": 97.79
+     }
+    ]
+   },
+   {
+    "points": [
+     {
+      "x": 88.9,
+      "y": 97.79
+     },
+     {
+      "x": 67.31,
+      "y": 97.79
+     }
+    ]
+   },
+   {
+    "points": [
+     {
+      "x": 63.5,
+      "y": 93.98
+     },
+     {
+      "x": 63.5,
+      "y": 96.52
+     }
+    ]
+   },
+   {
+    "points": [
+     {
+      "x": 127.0,
+      "y": 93.98
+     },
+     {
+      "x": 127.0,
+      "y": 96.52
+     }
+    ]
+   },
+   {
+    "points": [
+     {
+      "x": 101.6,
+      "y": 76.2
+     },
+     {
+      "x": 106.68,
+      "y": 76.2
+     }
+    ]
+   },
+   {
+    "points": [
+     {
+      "x": 101.6,
+      "y": 101.6
+     },
+     {
+      "x": 106.68,
+      "y": 101.6
+     }
+    ]
+   }
+  ],
+  "counts": {
+   "symbols": 11,
+   "labels": 2,
+   "wires": 12
+  }
+ },
+ "pcb": {
+  "project": "demo.kicad_pro",
+  "path": "demo.kicad_pcb",
+  "metadata": {
+   "version": "20260206",
+   "generator": "pcbnew",
+   "thickness": "1.6",
+   "plotReference": null
+  },
+  "layers": [
+   {
+    "name": "F.Cu",
+    "type": "signal",
+    "user": null
+   },
+   {
+    "name": "B.Cu",
+    "type": "signal",
+    "user": null
+   },
+   {
+    "name": "F.Adhes",
+    "type": "user",
+    "user": "F.Adhesive"
+   },
+   {
+    "name": "B.Adhes",
+    "type": "user",
+    "user": "B.Adhesive"
+   },
+   {
+    "name": "F.Paste",
+    "type": "user",
+    "user": null
+   },
+   {
+    "name": "B.Paste",
+    "type": "user",
+    "user": null
+   },
+   {
+    "name": "F.SilkS",
+    "type": "user",
+    "user": "F.Silkscreen"
+   },
+   {
+    "name": "B.SilkS",
+    "type": "user",
+    "user": "B.Silkscreen"
+   },
+   {
+    "name": "F.Mask",
+    "type": "user",
+    "user": null
+   },
+   {
+    "name": "B.Mask",
+    "type": "user",
+    "user": null
+   },
+   {
+    "name": "Dwgs.User",
+    "type": "user",
+    "user": "User.Drawings"
+   },
+   {
+    "name": "Cmts.User",
+    "type": "user",
+    "user": "User.Comments"
+   },
+   {
+    "name": "Eco1.User",
+    "type": "user",
+    "user": "User.Eco1"
+   },
+   {
+    "name": "Eco2.User",
+    "type": "user",
+    "user": "User.Eco2"
+   },
+   {
+    "name": "Edge.Cuts",
+    "type": "user",
+    "user": null
+   },
+   {
+    "name": "Margin",
+    "type": "user",
+    "user": null
+   },
+   {
+    "name": "F.CrtYd",
+    "type": "user",
+    "user": "F.Courtyard"
+   },
+   {
+    "name": "B.CrtYd",
+    "type": "user",
+    "user": "B.Courtyard"
+   },
+   {
+    "name": "F.Fab",
+    "type": "user",
+    "user": null
+   },
+   {
+    "name": "B.Fab",
+    "type": "user",
+    "user": null
+   },
+   {
+    "name": "User.1",
+    "type": "user",
+    "user": null
+   },
+   {
+    "name": "User.2",
+    "type": "user",
+    "user": null
+   },
+   {
+    "name": "User.3",
+    "type": "user",
+    "user": null
+   },
+   {
+    "name": "User.4",
+    "type": "user",
+    "user": null
+   }
+  ],
+  "nets": [],
+  "footprints": [
+   {
+    "name": "R_0805_2012Metric",
+    "reference": "R1",
+    "value": "10k",
+    "layer": "F.Cu",
+    "position": {
+     "x": 42.0,
+     "y": 22.0,
+     "angle": 90.0
+    },
+    "pads": [
+     {
+      "number": "1",
+      "type": "smd",
+      "shape": "roundrect",
+      "position": {
+       "x": -0.9125,
+       "y": 0.0
+      },
+      "layers": [
+       "F.Cu",
+       "F.Mask",
+       "F.Paste"
+      ],
+      "net": null
+     },
+     {
+      "number": "2",
+      "type": "smd",
+      "shape": "roundrect",
+      "position": {
+       "x": 0.9125,
+       "y": 0.0
+      },
+      "layers": [
+       "F.Cu",
+       "F.Mask",
+       "F.Paste"
+      ],
+      "net": "RST"
+     }
+    ]
+   },
+   {
+    "name": "SOIC-8_3.9x4.9mm_P1.27mm",
+    "reference": "U1",
+    "value": "MCU_8PIN",
+    "layer": "F.Cu",
+    "position": {
+     "x": 25.0,
+     "y": 15.0,
+     "angle": 0.0
+    },
+    "pads": [
+     {
+      "number": "1",
+      "type": "smd",
+      "shape": "roundrect",
+      "position": {
+       "x": -2.475,
+       "y": -1.905
+      },
+      "layers": [
+       "F.Cu",
+       "F.Mask",
+       "F.Paste"
+      ],
+      "net": "VCC"
+     },
+     {
+      "number": "2",
+      "type": "smd",
+      "shape": "roundrect",
+      "position": {
+       "x": -2.475,
+       "y": -0.635
+      },
+      "layers": [
+       "F.Cu",
+       "F.Mask",
+       "F.Paste"
+      ],
+      "net": "GND"
+     },
+     {
+      "number": "3",
+      "type": "smd",
+      "shape": "roundrect",
+      "position": {
+       "x": -2.475,
+       "y": 0.635
+      },
+      "layers": [
+       "F.Cu",
+       "F.Mask",
+       "F.Paste"
+      ],
+      "net": "CLK"
+     },
+     {
+      "number": "4",
+      "type": "smd",
+      "shape": "roundrect",
+      "position": {
+       "x": -2.475,
+       "y": 1.905
+      },
+      "layers": [
+       "F.Cu",
+       "F.Mask",
+       "F.Paste"
+      ],
+      "net": "D0"
+     },
+     {
+      "number": "5",
+      "type": "smd",
+      "shape": "roundrect",
+      "position": {
+       "x": 2.475,
+       "y": 1.905
+      },
+      "layers": [
+       "F.Cu",
+       "F.Mask",
+       "F.Paste"
+      ],
+      "net": "D1"
+     },
+     {
+      "number": "6",
+      "type": "smd",
+      "shape": "roundrect",
+      "position": {
+       "x": 2.475,
+       "y": 0.635
+      },
+      "layers": [
+       "F.Cu",
+       "F.Mask",
+       "F.Paste"
+      ],
+      "net": "RST"
+     },
+     {
+      "number": "7",
+      "type": "smd",
+      "shape": "roundrect",
+      "position": {
+       "x": 2.475,
+       "y": -0.635
+      },
+      "layers": [
+       "F.Cu",
+       "F.Mask",
+       "F.Paste"
+      ],
+      "net": null
+     },
+     {
+      "number": "8",
+      "type": "smd",
+      "shape": "roundrect",
+      "position": {
+       "x": 2.475,
+       "y": -1.905
+      },
+      "layers": [
+       "F.Cu",
+       "F.Mask",
+       "F.Paste"
+      ],
+      "net": null
+     }
+    ]
+   },
+   {
+    "name": "C_0805_2012Metric",
+    "reference": "C1",
+    "value": "100nF",
+    "layer": "F.Cu",
+    "position": {
+     "x": 8.0,
+     "y": 22.0,
+     "angle": 0.0
+    },
+    "pads": [
+     {
+      "number": "1",
+      "type": "smd",
+      "shape": "roundrect",
+      "position": {
+       "x": -0.95,
+       "y": 0.0
+      },
+      "layers": [
+       "F.Cu",
+       "F.Mask",
+       "F.Paste"
+      ],
+      "net": null
+     },
+     {
+      "number": "2",
+      "type": "smd",
+      "shape": "roundrect",
+      "position": {
+       "x": 0.95,
+       "y": 0.0
+      },
+      "layers": [
+       "F.Cu",
+       "F.Mask",
+       "F.Paste"
+      ],
+      "net": "GND"
+     }
+    ]
+   },
+   {
+    "name": "C_0805_2012Metric",
+    "reference": "C2",
+    "value": "10uF",
+    "layer": "F.Cu",
+    "position": {
+     "x": 40.0,
+     "y": 8.0,
+     "angle": 0.0
+    },
+    "pads": [
+     {
+      "number": "1",
+      "type": "smd",
+      "shape": "roundrect",
+      "position": {
+       "x": -0.95,
+       "y": 0.0
+      },
+      "layers": [
+       "F.Cu",
+       "F.Mask",
+       "F.Paste"
+      ],
+      "net": "VCC"
+     },
+     {
+      "number": "2",
+      "type": "smd",
+      "shape": "roundrect",
+      "position": {
+       "x": 0.95,
+       "y": 0.0
+      },
+      "layers": [
+       "F.Cu",
+       "F.Mask",
+       "F.Paste"
+      ],
+      "net": "GND"
+     }
+    ]
+   }
+  ],
+  "segments": [
+   {
+    "kind": "segment",
+    "layer": "F.Cu",
+    "start": {
+     "x": 40.95,
+     "y": 4.4
+    },
+    "end": {
+     "x": 24.0,
+     "y": 4.4
+    },
+    "width": 0.25,
+    "net": "GND"
+   },
+   {
+    "kind": "segment",
+    "layer": "F.Cu",
+    "start": {
+     "x": 24.0,
+     "y": 14.365
+    },
+    "end": {
+     "x": 22.525,
+     "y": 14.365
+    },
+    "width": 0.25,
+    "net": "GND"
+   },
+   {
+    "kind": "segment",
+    "layer": "F.Cu",
+    "start": {
+     "x": 40.95,
+     "y": 8.0
+    },
+    "end": {
+     "x": 40.95,
+     "y": 4.4
+    },
+    "width": 0.25,
+    "net": "GND"
+   },
+   {
+    "kind": "segment",
+    "layer": "F.Cu",
+    "start": {
+     "x": 14.0,
+     "y": 14.365
+    },
+    "end": {
+     "x": 22.525,
+     "y": 14.365
+    },
+    "width": 0.25,
+    "net": "GND"
+   },
+   {
+    "kind": "segment",
+    "layer": "F.Cu",
+    "start": {
+     "x": 14.0,
+     "y": 22.0
+    },
+    "end": {
+     "x": 14.0,
+     "y": 14.365
+    },
+    "width": 0.25,
+    "net": "GND"
+   },
+   {
+    "kind": "segment",
+    "layer": "F.Cu",
+    "start": {
+     "x": 24.0,
+     "y": 4.4
+    },
+    "end": {
+     "x": 24.0,
+     "y": 14.365
+    },
+    "width": 0.25,
+    "net": "GND"
+   },
+   {
+    "kind": "segment",
+    "layer": "F.Cu",
+    "start": {
+     "x": 8.95,
+     "y": 22.0
+    },
+    "end": {
+     "x": 14.0,
+     "y": 22.0
+    },
+    "width": 0.25,
+    "net": "GND"
+   },
+   {
+    "kind": "segment",
+    "layer": "F.Cu",
+    "start": {
+     "x": 39.05,
+     "y": 8.0
+    },
+    "end": {
+     "x": 26.0,
+     "y": 8.0
+    },
+    "width": 0.25,
+    "net": "VCC"
+   },
+   {
+    "kind": "segment",
+    "layer": "F.Cu",
+    "start": {
+     "x": 26.0,
+     "y": 13.095
+    },
+    "end": {
+     "x": 22.525,
+     "y": 13.095
+    },
+    "width": 0.25,
+    "net": "VCC"
+   },
+   {
+    "kind": "segment",
+    "layer": "F.Cu",
+    "start": {
+     "x": 26.0,
+     "y": 8.0
+    },
+    "end": {
+     "x": 26.0,
+     "y": 13.095
+    },
+    "width": 0.25,
+    "net": "VCC"
+   },
+   {
+    "kind": "segment",
+    "layer": "F.Cu",
+    "start": {
+     "x": 20.0,
+     "y": 20.0
+    },
+    "end": {
+     "x": 30.0,
+     "y": 20.0
+    },
+    "width": 0.25,
+    "net": "CLK"
+   },
+   {
+    "kind": "segment",
+    "layer": "F.Cu",
+    "start": {
+     "x": 20.0,
+     "y": 15.635
+    },
+    "end": {
+     "x": 20.0,
+     "y": 20.0
+    },
+    "width": 0.25,
+    "net": "CLK"
+   },
+   {
+    "kind": "segment",
+    "layer": "F.Cu",
+    "start": {
+     "x": 22.525,
+     "y": 15.635
+    },
+    "end": {
+     "x": 20.0,
+     "y": 15.635
+    },
+    "width": 0.25,
+    "net": "CLK"
+   },
+   {
+    "kind": "segment",
+    "layer": "B.Cu",
+    "start": {
+     "x": 30.0,
+     "y": 20.0
+    },
+    "end": {
+     "x": 36.0,
+     "y": 20.0
+    },
+    "width": 0.25,
+    "net": "CLK"
+   },
+   {
+    "kind": "segment",
+    "layer": "F.Cu",
+    "start": {
+     "x": 27.475,
+     "y": 15.635
+    },
+    "end": {
+     "x": 31.0,
+     "y": 15.635
+    },
+    "width": 0.25,
+    "net": "RST"
+   },
+   {
+    "kind": "segment",
+    "layer": "F.Cu",
+    "start": {
+     "x": 31.0,
+     "y": 15.635
+    },
+    "end": {
+     "x": 31.0,
+     "y": 18.0
+    },
+    "width": 0.25,
+    "net": "RST"
+   },
+   {
+    "kind": "segment",
+    "layer": "F.Cu",
+    "start": {
+     "x": 42.0,
+     "y": 18.0
+    },
+    "end": {
+     "x": 42.0,
+     "y": 21.087
+    },
+    "width": 0.25,
+    "net": "RST"
+   },
+   {
+    "kind": "segment",
+    "layer": "F.Cu",
+    "start": {
+     "x": 31.0,
+     "y": 18.0
+    },
+    "end": {
+     "x": 42.0,
+     "y": 18.0
+    },
+    "width": 0.25,
+    "net": "RST"
+   }
+  ],
+  "outline": [
+   {
+    "kind": "gr_line",
+    "layer": "Edge.Cuts",
+    "start": {
+     "x": 0.0,
+     "y": 0.0
+    },
+    "end": {
+     "x": 50.0,
+     "y": 0.0
+    }
+   },
+   {
+    "kind": "gr_line",
+    "layer": "Edge.Cuts",
+    "start": {
+     "x": 0.0,
+     "y": 30.0
+    },
+    "end": {
+     "x": 0.0,
+     "y": 0.0
+    }
+   },
+   {
+    "kind": "gr_line",
+    "layer": "Edge.Cuts",
+    "start": {
+     "x": 50.0,
+     "y": 0.0
+    },
+    "end": {
+     "x": 50.0,
+     "y": 30.0
+    }
+   },
+   {
+    "kind": "gr_line",
+    "layer": "Edge.Cuts",
+    "start": {
+     "x": 50.0,
+     "y": 30.0
+    },
+    "end": {
+     "x": 0.0,
+     "y": 30.0
+    }
+   }
+  ],
+  "counts": {
+   "layers": 24,
+   "nets": 0,
+   "footprints": 4,
+   "segments": 18,
+   "outline": 4
+  }
+ },
+ "inventory": {
+  "project": "demo.kicad_pro",
+  "files": [
+   {
+    "path": "demo.kicad_pro",
+    "bytes": 9547
+   },
+   {
+    "path": "demo.kicad_sch",
+    "bytes": 25328
+   },
+   {
+    "path": "demo.kicad_pcb",
+    "bytes": 22583
+   },
+   {
+    "path": "demo.kicad_prl",
+    "bytes": 2291
+   }
+  ]
+ },
+ "projects": [
+  {
+   "path": "demo.kicad_pro",
+   "name": "demo"
+  }
+ ],
+ "cli_version": "10.0.6",
+ "sch_extras": {
+  "bus": [
+   [
+    [
+     86.36,
+     86.36
+    ],
+    [
+     86.36,
+     91.44
+    ]
+   ]
+  ],
+  "bus_entry": [
+   {
+    "at": [
+     86.36,
+     88.9
+    ],
+    "size": [
+     2.54,
+     -2.54
+    ]
+   },
+   {
+    "at": [
+     86.36,
+     91.44
+    ],
+    "size": [
+     2.54,
+     -2.54
+    ]
+   }
+  ],
+  "sheet": [
+   {
+    "at": [
+     127.0,
+     114.3
+    ],
+    "size": [
+     25.4,
+     12.7
+    ],
+    "name": "power",
+    "pins": [
+     {
+      "name": "+3V3",
+      "at": [
+       127.0,
+       120.65
+      ]
+     }
+    ]
+   }
+  ],
+  "no_connect": [
+   [
+    111.76,
+    83.82
+   ],
+   [
+    111.76,
+    93.98
+   ]
+  ],
+  "junction": []
+ },
+ "vias": [
+  {
+   "at": [
+    30.0,
+    20.0
+   ],
+   "diameter": 0.6,
+   "drill": 0.3,
+   "net": null,
+   "layers": [
+    "F.Cu",
+    "B.Cu"
+   ]
+  }
+ ],
+ "zones": [
+  {
+   "net": null,
+   "layer": "F.Cu",
+   "points": [
+    [
+     0.5,
+     0.5
+    ],
+    [
+     49.5,
+     0.5
+    ],
+    [
+     49.5,
+     29.5
+    ],
+    [
+     0.5,
+     29.5
+    ]
+   ]
+  }
+ ],
+ "nets": [
+  {
+   "name": "/CLK",
+   "nodes": [
+    {
+     "ref": "U1",
+     "pin": "3",
+     "pintype": "bidirectional"
+    }
+   ]
+  },
+  {
+   "name": "GND",
+   "nodes": [
+    {
+     "ref": "C1",
+     "pin": "2",
+     "pintype": "passive"
+    },
+    {
+     "ref": "C2",
+     "pin": "2",
+     "pintype": "passive"
+    },
+    {
+     "ref": "U1",
+     "pin": "2",
+     "pintype": "power_in"
+    }
+   ]
+  },
+  {
+   "name": "Net-(U1-RST)",
+   "nodes": [
+    {
+     "ref": "R1",
+     "pin": "2",
+     "pintype": "passive"
+    },
+    {
+     "ref": "U1",
+     "pin": "6",
+     "pintype": "input"
+    }
+   ]
+  },
+  {
+   "name": "VCC",
+   "nodes": [
+    {
+     "ref": "C2",
+     "pin": "1",
+     "pintype": "passive"
+    },
+    {
+     "ref": "U1",
+     "pin": "1",
+     "pintype": "power_in"
+    }
+   ]
+  },
+  {
+   "name": "unconnected-(C1-Pad1)",
+   "nodes": [
+    {
+     "ref": "C1",
+     "pin": "1",
+     "pintype": "passive"
+    }
+   ]
+  },
+  {
+   "name": "unconnected-(R1-Pad1)",
+   "nodes": [
+    {
+     "ref": "R1",
+     "pin": "1",
+     "pintype": "passive"
+    }
+   ]
+  },
+  {
+   "name": "unconnected-(U1-D0-Pad4)",
+   "nodes": [
+    {
+     "ref": "U1",
+     "pin": "4",
+     "pintype": "bidirectional"
+    }
+   ]
+  },
+  {
+   "name": "unconnected-(U1-D1-Pad5)",
+   "nodes": [
+    {
+     "ref": "U1",
+     "pin": "5",
+     "pintype": "bidirectional"
+    }
+   ]
+  },
+  {
+   "name": "unconnected-(U1-NC7-Pad7)",
+   "nodes": [
+    {
+     "ref": "U1",
+     "pin": "7",
+     "pintype": "no_connect"
+    }
+   ]
+  },
+  {
+   "name": "unconnected-(U1-NC8-Pad8)",
+   "nodes": [
+    {
+     "ref": "U1",
+     "pin": "8",
+     "pintype": "no_connect"
+    }
+   ]
+  }
+ ],
+ "erc": {
+  "$schema": "https://schemas.kicad.org/erc.v1.json",
+  "coordinate_units": "mm",
+  "date": "2026-09-07T14:53:54",
+  "ignored_checks": [
+   {
+    "description": "Global label only appears once in the schematic",
+    "key": "single_global_label"
+   },
+   {
+    "description": "Four connection points are joined together",
+    "key": "four_way_junction"
+   },
+   {
+    "description": "SPICE model issue",
+    "key": "simulation_model_issue"
+   },
+   {
+    "description": "Assigned footprint doesn't match footprint filters",
+    "key": "footprint_filter"
+   }
+  ],
+  "included_severities": [
+   "error",
+   "warning",
+   "exclusion"
+  ],
+  "kicad_version": "10.0.6",
+  "sheets": [
+   {
+    "path": "/",
+    "uuid_path": "/a1b2c3d4-0000-4000-8000-000000000001",
+    "violations": [
+     {
+      "description": "Pin not connected",
+      "items": [
+       {
+        "description": "Symbol R1 引脚 1 [Passive, Line]",
+        "pos": {
+         "x": 0.5969,
+         "y": 0.9779
+        },
+        "uuid": "a1b2c3d4-0000-4000-8000-00000000002a"
+       }
+      ],
+      "severity": "error",
+      "type": "pin_not_connected"
+     },
+     {
+      "description": "Pin not connected",
+      "items": [
+       {
+        "description": "Symbol C1 引脚 1 [Passive, Line]",
+        "pos": {
+         "x": 0.635,
+         "y": 0.8636
+        },
+        "uuid": "a1b2c3d4-0000-4000-8000-00000000000a"
+       }
+      ],
+      "severity": "error",
+      "type": "pin_not_connected"
+     },
+     {
+      "description": "Pin not connected",
+      "items": [
+       {
+        "description": "Symbol U1 引脚 4 [D0, Bidirectional, Line]",
+        "pos": {
+         "x": 0.9144,
+         "y": 0.8636
+        },
+        "uuid": "a1b2c3d4-0000-4000-8000-000000000014"
+       }
+      ],
+      "severity": "error",
+      "type": "pin_not_connected"
+     },
+     {
+      "description": "Pin not connected",
+      "items": [
+       {
+        "description": "Symbol U1 引脚 5 [D1, Bidirectional, Line]",
+        "pos": {
+         "x": 0.9144,
+         "y": 0.889
+        },
+        "uuid": "a1b2c3d4-0000-4000-8000-000000000015"
+       }
+      ],
+      "severity": "error",
+      "type": "pin_not_connected"
+     },
+     {
+      "description": "Input Power pin not driven by any Output Power pins",
+      "items": [
+       {
+        "description": "Symbol #PWR01 引脚 1 [Power input, Line]",
+        "pos": {
+         "x": 1.016,
+         "y": 0.762
+        },
+        "uuid": "a1b2c3d4-0000-4000-8000-000000000032"
+       }
+      ],
+      "severity": "error",
+      "type": "power_pin_not_driven"
+     },
+     {
+      "description": "Input Power pin not driven by any Output Power pins",
+      "items": [
+       {
+        "description": "Symbol #PWR02 引脚 1 [Power input, Line]",
+        "pos": {
+         "x": 1.016,
+         "y": 1.016
+        },
+        "uuid": "a1b2c3d4-0000-4000-8000-000000000034"
+       }
+      ],
+      "severity": "error",
+      "type": "power_pin_not_driven"
+     },
+     {
+      "description": "Pin not connected",
+      "items": [
+       {
+        "description": "层次图纸引脚 '+3V3'",
+        "pos": {
+         "x": 1.27,
+         "y": 1.2065
+        },
+        "uuid": "a1b2c3d4-0000-4000-8000-000000000065"
+       }
+      ],
+      "severity": "error",
+      "type": "pin_not_connected"
+     },
+     {
+      "description": "网络 Net-(U1-D0) 以图形方式连接到总线 /D[1..0], 但不是总线的成员",
+      "items": [
+       {
+        "description": "总线至连线入口",
+        "pos": {
+         "x": 0.8636,
+         "y": 0.889
+        },
+        "uuid": "a1b2c3d4-0000-4000-8000-000000000043"
+       },
+       {
+        "description": "垂直总线, 长度 0.0508 mm",
+        "pos": {
+         "x": 0.8636,
+         "y": 0.8636
+        },
+        "uuid": "a1b2c3d4-0000-4000-8000-000000000042"
+       }
+      ],
+      "severity": "warning",
+      "type": "net_not_bus_member"
+     },
+     {
+      "description": "网络 Net-(U1-D1) 以图形方式连接到总线 /D[1..0], 但不是总线的成员",
+      "items": [
+       {
+        "description": "总线至连线入口",
+        "pos": {
+         "x": 0.8636,
+         "y": 0.9144
+        },
+        "uuid": "a1b2c3d4-0000-4000-8000-000000000044"
+       },
+       {
+        "description": "垂直总线, 长度 0.0508 mm",
+        "pos": {
+         "x": 0.8636,
+         "y": 0.8636
+        },
+        "uuid": "a1b2c3d4-0000-4000-8000-000000000042"
+       }
+      ],
+      "severity": "warning",
+      "type": "net_not_bus_member"
+     },
+     {
+      "description": "Label connected to only one pin",
+      "items": [
+       {
+        "description": "标签 'CLK'",
+        "pos": {
+         "x": 0.8763,
+         "y": 0.8382
+        },
+        "uuid": "a1b2c3d4-0000-4000-8000-000000000041"
+       }
+      ],
+      "severity": "warning",
+      "type": "isolated_pin_label"
+     },
+     {
+      "description": "类型为 Unspecified 和 Power input 的引脚已连接",
+      "items": [
+       {
+        "description": "引脚 1 [???, ?]",
+        "pos": {
+         "x": 1.0668,
+         "y": 0.762
+        },
+        "uuid": "a1b2c3d4-0000-4000-8000-00000000007e"
+       },
+       {
+        "description": "Symbol #PWR01 引脚 1 [Power input, Line]",
+        "pos": {
+         "x": 1.016,
+         "y": 0.762
+        },
+        "uuid": "a1b2c3d4-0000-4000-8000-000000000032"
+       }
+      ],
+      "severity": "warning",
+      "type": "pin_to_pin"
+     },
+     {
+      "description": "未连接的连线端点",
+      "items": [
+       {
+        "description": "水平线, 长度 0.0508 mm",
+        "pos": {
+         "x": 1.016,
+         "y": 0.762
+        },
+        "uuid": "a1b2c3d4-0000-4000-8000-000000000073"
+       }
+      ],
+      "severity": "warning",
+      "type": "unconnected_wire_endpoint"
+     },
+     {
+      "description": "类型为 Unspecified 和 Power input 的引脚已连接",
+      "items": [
+       {
+        "description": "引脚 1 [???, ?]",
+        "pos": {
+         "x": 1.0668,
+         "y": 1.016
+        },
+        "uuid": "a1b2c3d4-0000-4000-8000-00000000007f"
+       },
+       {
+        "description": "Symbol #PWR02 引脚 1 [Power input, Line]",
+        "pos": {
+         "x": 1.016,
+         "y": 1.016
+        },
+        "uuid": "a1b2c3d4-0000-4000-8000-000000000034"
+       }
+      ],
+      "severity": "warning",
+      "type": "pin_to_pin"
+     },
+     {
+      "description": "未连接的连线端点",
+      "items": [
+       {
+        "description": "水平线, 长度 0.0508 mm",
+        "pos": {
+         "x": 1.016,
+         "y": 1.016
+        },
+        "uuid": "a1b2c3d4-0000-4000-8000-000000000074"
+       }
+      ],
+      "severity": "warning",
+      "type": "unconnected_wire_endpoint"
+     }
+    ]
+   },
+   {
+    "path": "/power/",
+    "uuid_path": "/a1b2c3d4-0000-4000-8000-000000000001/a1b2c3d4-0000-4000-8000-000000000064",
+    "violations": [
+     {
+      "description": "VCC 和 +3V3 都连接到同一项上; 将使用 VCC 作为网表中的网络名称",
+      "items": [
+       {
+        "description": "Symbol #PWR06 引脚 1 [Power input, Line]",
+        "pos": {
+         "x": 0.9652,
+         "y": 0.508
+        },
+        "uuid": "a1b2c3d4-0000-4000-8000-000000000068"
+       },
+       {
+        "description": "层次标签 '+3V3'",
+        "pos": {
+         "x": 0.889,
+         "y": 0.508
+        },
+        "uuid": "a1b2c3d4-0000-4000-8000-000000000066"
+       }
+      ],
+      "severity": "warning",
+      "type": "multiple_net_names"
+     }
+    ]
+   }
+  ],
+  "source": "demo.kicad_sch"
+ },
+ "drc": {
+  "$schema": "https://schemas.kicad.org/drc.v1.json",
+  "coordinate_units": "mm",
+  "date": "2026-09-07T14:53:55",
+  "ignored_checks": [
+   {
+    "description": "Footprint has no courtyard defined",
+    "key": "missing_courtyard"
+   },
+   {
+    "description": "Track endpoint not centered on via",
+    "key": "track_not_centered_on_via"
+   },
+   {
+    "description": "Tuning profile track geometries",
+    "key": "tuning_profile_track_geometries"
+   },
+   {
+    "description": "Footprint doesn't match symbol's footprint filters",
+    "key": "footprint_filters_mismatch"
+   },
+   {
+    "description": "Footprint component type doesn't match footprint pads",
+    "key": "footprint_type_mismatch"
+   }
+  ],
+  "included_severities": [
+   "error",
+   "warning",
+   "exclusion"
+  ],
+  "kicad_version": "10.0.6",
+  "schematic_parity": [],
+  "source": "demo.kicad_pcb",
+  "unconnected_items": [],
+  "violations": [
+   {
+    "description": "Track has unconnected end",
+    "items": [
+     {
+      "description": "走线 [CLK] (B.Cu), 长度: 6.0000 mm",
+      "pos": {
+       "x": 30.0,
+       "y": 20.0
+      },
+      "uuid": "9bb70861-46ab-449e-960d-e0d8bac3b1cd"
+     }
+    ],
+    "severity": "warning",
+    "type": "track_dangling"
+   }
+  ]
+ }
+}

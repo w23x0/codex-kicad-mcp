@@ -1,0 +1,189 @@
+{
+  "$schema": "./catalog.schema.json",
+  "schemaVersion": 1,
+  "project": "Codex-KiCad",
+  "purpose": "Portable catalog and operating guidance for Codex MCP servers and skills used in KiCad and LTspice workflows.",
+  "updated": "2026-09-07",
+  "pathNote": "Paths are portable references or local observations. Replace placeholders on the target machine; never commit secrets or machine-specific credentials.",
+  "codexRegistration": {
+    "config": "${CODEX_HOME}/config.toml",
+    "status": "needs-review",
+    "lastChecked": "2026-09-07",
+    "listedServers": [
+      "node-repl"
+    ],
+    "expectedServers": [
+      "kicad",
+      "ltspice"
+    ],
+    "note": "The local Codex check listed node_repl only. kicad and ltspice must be registered and re-checked on each target machine; an available entrypoint is not the same as host registration."
+  },
+  "mcps": [
+    {
+      "id": "kicad",
+      "displayName": "Codex KiCad MCP",
+      "purpose": "Read-first discovery, project inspection, schematic/PCB parsing, netlist/BOM exports, review heuristics, controlled writes, and ERC/DRC checks through kicad-cli.",
+      "source": "../mcp",
+      "entrypoint": "uv run --directory ../mcp codex-kicad-mcp",
+      "config": "${CODEX_HOME}/config.toml",
+      "transport": "stdio",
+      "capabilities": [
+        "project-discovery",
+        "project-summary",
+        "schematic-read",
+        "pcb-read",
+        "hierarchy-bus-read",
+        "netlist-bom-export",
+        "review-heuristics",
+        "erc-drc-checks",
+        "opt-in-controlled-writes"
+      ],
+      "tools": [
+        "list_kicad_projects",
+        "inspect_project",
+        "project_summary",
+        "read_schematic",
+        "read_hierarchy",
+        "read_buses",
+        "read_netlist",
+        "read_bom",
+        "read_pcb",
+        "read_board_metrics",
+        "read_layer_stackup",
+        "read_zones",
+        "read_vias",
+        "kicad_cli_version",
+        "run_kicad_cli_check",
+        "analyze_power_rails",
+        "check_decoupling",
+        "cross_probe",
+        "compare_schematic_pcb",
+        "run_design_review",
+        "analyze_signal_integrity",
+        "analyze_board_density",
+        "check_fabrication_readiness",
+        "preview_write",
+        "confirm_write",
+        "rollback_snapshot",
+        "list_snapshots",
+        "get_write_audit"
+      ],
+      "environment": [
+        "KICAD_WORKSPACE",
+        "KICAD_MAX_FILE_BYTES",
+        "KICAD_MAX_SEXPR_TOKENS",
+        "KICAD_MAX_SEXPR_DEPTH",
+        "KICAD_MAX_RESULT_ITEMS",
+        "KICAD_MAX_CLI_OUTPUT_BYTES",
+        "KICAD_CLI_CHECK_TIMEOUT",
+        "KICAD_CLI_VERSION_TIMEOUT",
+        "KICAD_EXPORT_TIMEOUT",
+        "KICAD_ENABLE_WRITES",
+        "KICAD_SNAPSHOT_ROOT",
+        "KICAD_WRITE_TOKEN_TTL",
+        "KICAD_WRITE_PREVIEW_TTL",
+        "KICAD_MAX_SNAPSHOTS_LISTED"
+      ],
+      "permissions": {
+        "read": true,
+        "write": false,
+        "network": false,
+        "subprocess": true
+      },
+      "risk": "moderate",
+      "status": "needs-review",
+      "verification": {
+        "lastChecked": "2026-09-07",
+        "result": "not-registered",
+        "commands": [
+          "codex mcp list",
+          "uv run --directory ../mcp pytest -q"
+        ],
+        "observed": "The local Codex host did not list kicad; registration and KiCad CLI integration remain target-machine checks. The pytest suite (122 tests, including real-project scans) passes locally with KiCad 10.0.6."
+      },
+      "notes": "The server is read-first. KiCad may create report side effects during ERC/DRC; inspect exit codes and issue lines before declaring a check clean. Write tools stay inert unless KICAD_ENABLE_WRITES=1 is set exactly."
+    },
+    {
+      "id": "ltspice",
+      "displayName": "LTspice MCP",
+      "purpose": "Create and run LTspice/SPICE simulations and expose reproducible waveform checks to Codex.",
+      "source": "<path-to>/ltspice-mcp",
+      "entrypoint": "<path-to>/ltspice-mcp",
+      "config": "<path-to>/ltspice-mcp.toml",
+      "transport": "stdio",
+      "capabilities": [
+        "netlist-simulation",
+        "transient-analysis",
+        "ac-analysis"
+      ],
+      "permissions": {
+        "read": true,
+        "write": true,
+        "network": false,
+        "subprocess": true
+      },
+      "risk": "moderate",
+      "status": "planned",
+      "verification": {
+        "lastChecked": "2026-09-07",
+        "result": "not-run",
+        "commands": [
+          "codex mcp list",
+          "uv run --with mcp python <path-to>/test_mcp_server.py ltspice"
+        ],
+        "observed": "No LTspice MCP executable or registration was present in this workspace; install and verify it on the target machine before use."
+      },
+      "notes": "Treat simulation inputs and generated waveforms as project artifacts. Run simulations in a disposable or versioned simulation directory and review convergence warnings."
+    }
+  ],
+  "skills": [
+    {
+      "id": "hardware-eda",
+      "displayName": "Hardware EDA Workflow",
+      "purpose": "Shared workflow guidance for KiCad and LTspice tasks, including design intent, simulation, checks, and manufacturing gates.",
+      "source": "${CODEX_HOME}/skills/hardware-eda/SKILL.md",
+      "scope": "installed Codex skill",
+      "status": "installed",
+      "verification": {
+        "lastChecked": "2026-09-07",
+        "result": "pass",
+        "commands": [
+          "Get-Content ${CODEX_HOME}/skills/hardware-eda/SKILL.md"
+        ],
+        "observed": "The skill file is installed and its workflow was reviewed; local KiCad and LTspice MCP registration still requires a host check."
+      }
+    },
+    {
+      "id": "ltspice",
+      "displayName": "LTspice Workflow",
+      "purpose": "LTspice/SPICE netlist syntax, source setup, convergence, measurements, and result interpretation.",
+      "source": "${CODEX_HOME}/skills/ltspice/SKILL.md",
+      "scope": "installed Codex skill",
+      "status": "installed",
+      "verification": {
+        "lastChecked": "2026-09-07",
+        "result": "pass",
+        "commands": [
+          "Get-Content ${CODEX_HOME}/skills/ltspice/SKILL.md"
+        ],
+        "observed": "The skill file is installed and available for simulation tasks."
+      }
+    },
+    {
+      "id": "codex-kicad",
+      "displayName": "Codex KiCad Workflow",
+      "purpose": "Server-specific read-first workflow for discovering KiCad projects and interpreting ERC/DRC results.",
+      "source": "../mcp/skills/codex-kicad/SKILL.md",
+      "scope": "repository skill",
+      "status": "available",
+      "verification": {
+        "lastChecked": "2026-09-07",
+        "result": "pass",
+        "commands": [
+          "Get-Content ../mcp/skills/codex-kicad/SKILL.md"
+        ],
+        "observed": "The sibling MCP repository contains the skill file; copy or install it through the target Codex skill workflow as appropriate."
+      }
+    }
+  ]
+}

@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demo Fixture Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --ground: #F3F2ED;
+    --surface: #FAFAF7;
+    --surface-2: #ECEAE2;
+    --ink: #22302B;
+    --ink-2: #5A6B64;
+    --copper: #A87A0A;
+    --copper-hi: #E8B33A;
+    --solder: #2E6E4E;
+    --error: #C24E3A;
+    --warn: #A8871B;
+    --grid: rgba(34, 48, 43, 0.08);
+    --edge: rgba(34, 48, 43, 0.22);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #16201C;
+      --surface: #1D2925;
+      --surface-2: #24332D;
+      --ink: #E9E7DC;
+      --ink-2: #93A69D;
+      --copper: #E8B33A;
+      --copper-hi: #F5C95C;
+      --solder: #5FA381;
+      --error: #E07B63;
+      --warn: #D4AF37;
+      --grid: rgba(233, 231, 220, 0.07);
+      --edge: rgba(233, 231, 220, 0.2);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #16201C;
+    --surface: #1D2925;
+    --surface-2: #24332D;
+    --ink: #E9E7DC;
+    --ink-2: #93A69D;
+    --copper: #E8B33A;
+    --copper-hi: #F5C95C;
+    --solder: #5FA381;
+    --error: #E07B63;
+    --warn: #D4AF37;
+    --grid: rgba(233, 231, 220, 0.07);
+    --edge: rgba(233, 231, 220, 0.2);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Archivo", system-ui, sans-serif;
+    line-height: 1.55;
+    padding: 0 clamp(20px, 4vw, 56px);
+  }
+  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+
+  header {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: clamp(40px, 7vw, 84px) 0 26px;
+  }
+  .eyebrow {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--copper);
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-size: clamp(32px, 5vw, 58px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.04;
+    text-wrap: balance;
+  }
+  .lede {
+    margin-top: 18px;
+    max-width: 64ch;
+    font-size: clamp(15px, 1.6vw, 17px);
+    color: var(--ink-2);
+  }
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 34px 52px;
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--edge);
+  }
+  .stat .n {
+    font-family: "JetBrains Mono", monospace;
+    font-size: clamp(24px, 3vw, 34px);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat .l {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    margin-top: 2px;
+  }
+
+  .views {
+    max-width: 1240px;
+    margin: 26px auto 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  @media (max-width: 920px) { .views { grid-template-columns: 1fr; } }
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--edge);
+    border-radius: 10px;
+    padding: 18px 18px 12px;
+  }
+  .panel h2 {
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+  .panel .file {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    color: var(--copper);
+    margin: 3px 0 10px;
+  }
+  .board-wrap { overflow-x: auto; padding: 4px 0; }
+  .board-wrap svg { display: block; max-width: 100%; height: auto; }
+  svg text { user-select: none; }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--edge);
+    font-size: 11px;
+    color: var(--ink-2);
+  }
+  .legend .sw {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    margin-right: 6px;
+    vertical-align: -1px;
+  }
+
+  .findings {
+    max-width: 1240px;
+    margin: 26px auto 90px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  @media (max-width: 920px) { .findings { grid-template-columns: 1fr; } }
+  .find-panel {
+    background: var(--surface);
+    border: 1px solid var(--edge);
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .find-panel h2 {
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .find-panel h2 .cnt {
+    font-family: "JetBrains Mono", monospace;
+    color: var(--copper);
+    letter-spacing: 0;
+  }
+  table { width: 100%; border-collapse: collapse; }
+  td { padding: 7px 8px 7px 0; vertical-align: top; border-top: 1px solid var(--edge); font-size: 12.5px; }
+  tr:first-child td { border-top: none; }
+  .sev {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+    vertical-align: 1px;
+  }
+  .sev.error { background: var(--error); }
+  .sev.warning { background: var(--warn); }
+  .sev.exclusion { background: var(--ink-2); }
+  .rule {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--ink);
+  }
+  .obj { color: var(--ink-2); font-size: 11.5px; }
+  td.pos { text-align: right; white-space: nowrap; font-size: 11px; color: var(--ink-2); font-family: "JetBrains Mono", monospace; }
+  footer {
+    max-width: 1240px;
+    margin: 0 auto 60px;
+    font-size: 12px;
+    color: var(--ink-2);
+    border-top: 1px solid var(--edge);
+    padding-top: 14px;
+  }
+  footer .mono { color: var(--copper); }
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Codex-KiCad MCP · Test Fixture</div>
+  <h1>Demo Fixture Board</h1>
+  <p class="lede">A deterministic KiCad 10 project that exercises every read tool of the
+  MCP server: symbols, wires, a data bus, a hierarchical power sheet, and a real-footprint
+  PCB with routes, a via, and a GND zone. The two views share one net color system —
+  trace VCC or GND across both.</p>
+  <div class="stats" id="stats"></div>
+</header>
+
+<section class="views">
+  <div class="panel">
+    <h2>Schematic</h2>
+    <div class="file">demo.kicad_sch · 1.27&nbsp;mm grid</div>
+    <div class="board-wrap" id="sch"></div>
+  </div>
+  <div class="panel">
+    <h2>PCB</h2>
+    <div class="file">demo.kicad_pcb · 50 × 30 mm</div>
+    <div class="board-wrap" id="pcbv"></div>
+  </div>
+</section>
+
+<section class="findings">
+  <div class="find-panel">
+    <h2>ERC <span class="cnt" id="erc-cnt"></span></h2>
+    <table id="erc-table"></table>
+  </div>
+  <div class="find-panel">
+    <h2>DRC <span class="cnt" id="drc-cnt"></span></h2>
+    <table id="drc-table"></table>
+  </div>
+</section>
+
+<footer>
+  Parsed by <span class="mono">codex_kicad_mcp</span> from the shipped fixture —
+  schematic and PCB S-expressions, netlist via <span class="mono">kicad-cli</span>,
+  ERC/DRC via <span class="mono">kicad-cli --format json</span>.
+  Regenerate with <span class="mono">scripts/generate_fixture.py</span> + <span class="mono">scripts/dump_fixture_json.py</span>.
+</footer>
+
+<script id="data" type="application/json">__DATA__</script>
+<script>
+(function () {
+  var D = JSON.parse(document.getElementById("data").textContent);
+
+  // ---------- net color system shared by both views ----------
+  var NET_COLORS = {
+    "VCC": "var(--copper)",
+    "GND": "var(--solder)",
+    "/CLK": "var(--error)",
+    "Net-(U1-RST)": "var(--warn)",
+    "D0": "var(--copper-hi)",
+    "D1": "var(--copper-hi)"
+  };
+  var UNCONNECTED = "var(--ink-2)";
+
+  // ---------- header stats ----------
+  var sym = D.schematic.counts.symbols;
+  var wires = D.schematic.counts.wires;
+  var segs = D.pcb.counts.segments;
+  var fps = D.pcb.counts.footprints;
+  var ercN = 0, drcN = 0;
+  D.erc.sheets.forEach(function (s) { ercN += s.violations.length; });
+  drcN = D.drc.violations.length;
+  var stats = [
+    [D.cli_version, "KiCad CLI"],
+    [sym, "symbols"],
+    [wires, "wires"],
+    [fps, "footprints"],
+    [segs, "tracks"],
+    [D.vias.length, "via"],
+    [D.nets.length, "nets"],
+    [ercN, "ERC findings"],
+    [drcN, "DRC findings"]
+  ];
+  document.getElementById("stats").innerHTML = stats.map(function (s) {
+    return '<div class="stat"><div class="n">' + s[0] + '</div><div class="l">' + s[1] + '</div></div>';
+  }).join("");
+
+  // ---------- schematic SVG ----------
+  // KiCad y is down in file coords; SVG same. Data ranges:
+  //   symbols ~ x 63.5..127, y 76.2..120.65; pad for margins.
+  var SCH_X0 = 52, SCH_Y0 = 62, SCH_X1 = 145, SCH_Y1 = 132;
+  var SW = 930, SHEIGHT = 560;
+  function sx(x) { return (x - SCH_X0) / (SCH_X1 - SCH_X0) * SW; }
+  function sy(y) { return (y - SCH_Y0) / (SCH_Y1 - SCH_Y0) * SHEIGHT; }
+
+  var s = [];
+  // grid
+  s.push('<svg viewBox="0 0 ' + SW + ' ' + SHEIGHT + '" xmlns="http://www.w3.org/2000/svg">');
+  s.push('<g stroke="var(--grid)" stroke-width="1">');
+  for (var gx = SCH_X0; gx <= SCH_X1; gx += 1.27) {
+    s.push('<line x1="' + sx(gx) + '" y1="0" x2="' + sx(gx) + '" y2="' + SHEIGHT + '"/>');
+  }
+  for (var gy = SCH_Y0; gy <= SCH_Y1; gy += 1.27) {
+    s.push('<line x1="0" y1="' + sy(gy) + '" x2="' + SW + '" y2="' + sy(gy) + '"/>');
+  }
+  s.push('</g>');
+
+  // wires with net colors
+  var netOf = {};
+  D.nets.forEach(function (n) { n.nodes.forEach(function (nd) {
+    netOf[nd.ref + ":" + nd.pin] = n.name;
+  }); });
+
+  D.schematic.wires.forEach(function (w) {
+    var pts = w.points.map(function (p) { return sx(p.x) + "," + sy(p.y); }).join(" ");
+    s.push('<polyline points="' + pts + '" fill="none" stroke="var(--copper)" stroke-width="1.6" opacity="0.85"/>');
+  });
+  // buses
+  D.sch_extras.bus.forEach(function (seg) {
+    var pts = seg.map(function (p) { return sx(p[0]) + "," + sy(p[1]); }).join(" ");
+    s.push('<polyline points="' + pts + '" fill="none" stroke="var(--ink)" stroke-width="3.4" opacity="0.9"/>');
+  });
+  D.sch_extras.bus_entry.forEach(function (e) {
+    var x1 = e.at[0], y1 = e.at[1], x2 = x1 + e.size[0], y2 = y1 + e.size[1];
+    s.push('<line x1="' + sx(x1) + '" y1="' + sy(y1) + '" x2="' + sx(x2) + '" y2="' + sy(y2) +
+      '" stroke="var(--ink)" stroke-width="1.8"/>');
+  });
+  // no_connect crosses
+  D.sch_extras.no_connect.forEach(function (p) {
+    var cx = sx(p[0]), cy = sy(p[1]);
+    s.push('<g stroke="var(--ink-2)" stroke-width="1.4">' +
+      '<line x1="' + (cx-7) + '" y1="' + (cy-7) + '" x2="' + (cx+7) + '" y2="' + (cy+7) + '"/>' +
+      '<line x1="' + (cx-7) + '" y1="' + (cy+7) + '" x2="' + (cx+7) + '" y2="' + (cy-7) + '"/></g>');
+  });
+  // sheet frame
+  D.sch_extras.sheet.forEach(function (sh) {
+    s.push('<rect x="' + sx(sh.at[0]) + '" y="' + sy(sh.at[1]) + '" width="' +
+      (sx(sh.at[0]+sh.size[0]) - sx(sh.at[0])) + '" height="' +
+      (sy(sh.at[1]+sh.size[1]) - sy(sh.at[1])) +
+      '" fill="none" stroke="var(--ink-2)" stroke-width="1.4"/>');
+    s.push('<text x="' + (sx(sh.at[0]) + 4) + '" y="' + (sy(sh.at[1]) + 14) +
+      '" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--ink-2)">' + sh.name + '</text>');
+    sh.pins.forEach(function (pin) {
+      s.push('<circle cx="' + sx(pin.at[0]) + '" cy="' + sy(pin.at[1]) + '" r="3.4" fill="var(--copper-hi)" stroke="var(--copper)"/>');
+      s.push('<text x="' + (sx(pin.at[0]) + 8) + '" y="' + (sy(pin.at[1]) + 4) +
+        '" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--copper)">' + pin.name + '</text>');
+    });
+  });
+
+  // symbols: body rect + pins + refs
+  D.schematic.symbols.forEach(function (sym2) {
+    if (!sym2.position || sym2.reference === null) return;
+    var cx = sx(sym2.position.x), cy = sy(sym2.position.y);
+    var isPower = sym2.libId && sym2.libId.indexOf("power:") === 0;
+    var isC = sym2.value === "100nF" || sym2.value === "10uF";
+    var isR = sym2.value === "10k";
+    if (isPower) {
+      // triangle-up for VCC, bar for GND
+      if (sym2.value === "VCC") {
+        s.push('<path d="M ' + (cx-9) + ' ' + cy + ' L ' + (cx+9) + ' ' + cy + ' L ' + cx + ' ' + (cy-11) + ' Z" fill="var(--copper)" opacity="0.9"/>');
+      } else {
+        s.push('<g stroke="var(--solder)" stroke-width="2.2">' +
+          '<line x1="' + (cx-10) + '" y1="' + cy + '" x2="' + (cx+10) + '" y2="' + cy + '"/>' +
+          '<line x1="' + (cx-6) + '" y1="' + (cy+4) + '" x2="' + (cx+6) + '" y2="' + (cy+4) + '"/>' +
+          '<line x1="' + (cx-2.5) + '" y1="' + (cy+8) + '" x2="' + (cx+2.5) + '" y2="' + (cy+8) + '"/></g>');
+      }
+      s.push('<text x="' + (cx + 13) + '" y="' + (cy + 4) + '" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600" fill="' + (sym2.value === "VCC" ? "var(--copper)" : "var(--solder)") + '">' + sym2.value + '</text>');
+      return;
+    }
+    if (isC) {
+      // cap: two plates vertical
+      var h = 14;
+      s.push('<g stroke="var(--ink)" stroke-width="2.4">' +
+        '<line x1="' + (cx-9) + '" y1="' + (cy-h) + '" x2="' + (cx+9) + '" y2="' + (cy-h) + '"/>' +
+        '<line x1="' + (cx-9) + '" y1="' + (cy+h) + '" x2="' + (cx+9) + '" y2="' + (cy+h) + '"/></g>');
+      s.push('<text x="' + (cx + 14) + '" y="' + (cy + 4) + '" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--ink)">' + sym2.reference + '</text>');
+      s.push('<text x="' + (cx + 14) + '" y="' + (cy + 16) + '" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--ink-2)">' + sym2.value + '</text>');
+      return;
+    }
+    if (isR) {
+      s.push('<rect x="' + (cx-13) + '" y="' + (cy-8) + '" width="26" height="16" fill="none" stroke="var(--ink)" stroke-width="2"/>');
+      s.push('<text x="' + (cx + 16) + '" y="' + (cy + 4) + '" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--ink)">' + sym2.reference + '</text>');
+      s.push('<text x="' + (cx + 16) + '" y="' + (cy + 16) + '" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--ink-2)">' + sym2.value + '</text>');
+      return;
+    }
+    // U1: MCU body 15.24x20.32 mm centered at position
+    var w2 = sx(101.6 + 7.62) - sx(101.6 - 7.62);
+    var h2 = sy(88.9 + 10.16) - sy(88.9 - 10.16);
+    s.push('<rect x="' + (cx - w2/2) + '" y="' + (cy - h2/2) + '" width="' + w2 + '" height="' + h2 +
+      '" fill="var(--surface-2)" stroke="var(--ink)" stroke-width="1.8"/>');
+    s.push('<text x="' + (cx) + '" y="' + (cy + 4) + '" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600" fill="var(--ink)">U1</text>');
+    s.push('<text x="' + cx + '" y="' + (cy + 18) + '" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--ink-2)">MCU 8-pin</text>');
+  });
+
+  // dangling pins: unconnected net names -> mark with error dots
+  D.nets.forEach(function (n) {
+    if (n.name.indexOf("unconnected-") !== 0) return;
+    var nd = n.nodes[0];
+    // find the owning symbol position
+    var sym2 = D.schematic.symbols.filter(function (x) { return x.reference === nd.ref; })[0];
+    if (!sym2 || !sym2.position) return;
+    var cx = sx(sym2.position.x), cy = sy(sym2.position.y);
+    s.push('<circle cx="' + cx + '" cy="' + cy + '" r="5" fill="var(--error)" opacity="0.85"/>');
+  });
+  // labels
+  D.schematic.labels.forEach(function (l) {
+    if (!l.position) return;
+    var fill = l.kind === "hierarchical_label" ? "var(--copper)" : "var(--error)";
+    s.push('<text x="' + (sx(l.position.x) + 2) + '" y="' + (sy(l.position.y) - 6) +
+      '" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600" fill="' + fill + '">' + l.text + '</text>');
+  });
+  s.push('</svg>');
+  document.getElementById("sch").innerHTML = s.join("");
+
+  // ---------- PCB SVG ----------
+  var PW = 930, PH = 600;
+  var PX0 = -2, PY0 = -2, PX1 = 52, PY1 = 32;
+  function px(x) { return (x - PX0) / (PX1 - PX0) * PW; }
+  function py(y) { return (y - PY0) / (PY1 - PY0) * PH; }
+
+  var p = [];
+  p.push('<svg viewBox="0 0 ' + PW + ' ' + PH + '" xmlns="http://www.w3.org/2000/svg">');
+  // board ground
+  p.push('<rect x="' + px(0) + '" y="' + py(0) + '" width="' + (px(50)-px(0)) + '" height="' + (py(30)-py(0)) +
+    '" fill="var(--surface-2)" stroke="var(--ink)" stroke-width="1.6"/>');
+  // zone
+  D.zones.forEach(function (z) {
+    if (!z.points.length) return;
+    var pts = z.points.map(function (q) { return px(q[0]) + "," + py(q[1]); }).join(" ");
+    p.push('<polygon points="' + pts + '" fill="var(--solder)" opacity="0.14" stroke="var(--solder)" stroke-dasharray="5 4" stroke-width="1.2"/>');
+  });
+  // tracks + pads share the schematic's net color system (both carry names)
+  D.pcb.segments.forEach(function (t) {
+    if (t.kind !== "segment") return;
+    var c = NET_COLORS[t.net] || "var(--ink-2)";
+    p.push('<line x1="' + px(t.start.x) + '" y1="' + py(t.start.y) + '" x2="' + px(t.end.x) + '" y2="' + py(t.end.y) +
+      '" stroke="' + c + '" stroke-width="' + Math.max(2.2, px(t.width || 0.25) ) + '" stroke-linecap="round"/>');
+  });
+  // vias: color by coordinates -> CLK route (30,20)
+  D.vias.forEach(function (v) {
+    p.push('<circle cx="' + px(v.at[0]) + '" cy="' + py(v.at[1]) + '" r="' + (px(v.diameter/2) ) +
+      '" fill="none" stroke="var(--error)" stroke-width="2.4"/>' +
+      '<circle cx="' + px(v.at[0]) + '" cy="' + py(v.at[1]) + '" r="' + (px(v.drill/2)) + '" fill="var(--ground)"/>');
+  });
+  // footprints: pads are relative to the footprint position
+  D.pcb.footprints.forEach(function (f) {
+    if (!f.position) return;
+    var fx = px(f.position.x), fy = py(f.position.y);
+    var isU1 = f.reference === "U1";
+    if (isU1) {
+      p.push('<rect x="' + (fx - 30) + '" y="' + (fy - 26) + '" width="60" height="52" rx="3" fill="none" stroke="var(--ink)" stroke-width="1.6"/>');
+      p.push('<text x="' + fx + '" y="' + (fy + 4) + '" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600" fill="var(--ink)">U1</text>');
+    }
+    f.pads.forEach(function (pad) {
+      if (!pad.position) return;
+      var c = NET_COLORS[pad.net] || "var(--ink-2)";
+      var cx = fx + (pad.position.x * PW / (PX1 - PX0));
+      var cy = fy + (pad.position.y * PH / (PY1 - PY0));
+      p.push('<rect x="' + (cx-6) + '" y="' + (cy-5) + '" width="12" height="10" rx="1.5" fill="' + c + '"/>');
+    });
+    if (!isU1) {
+      p.push('<text x="' + fx + '" y="' + (fy + 22) + '" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10.5" fill="var(--ink)">' + f.reference + '</text>');
+    }
+  });
+  p.push('</svg>');
+  document.getElementById("pcbv").innerHTML = p.join("");
+
+  // ---------- findings tables ----------
+  function renderFindings(el, list) {
+    el.innerHTML = list.map(function (v) {
+      var rule = v.type || "?";
+      var desc = (v.description || "").slice(0, 64);
+      var obj = (v.items || []).map(function (it) { return (it.description || "").slice(0, 40); }).join(" · ");
+      var pos = (v.items && v.items[0] && v.items[0].pos) ?
+        (v.items[0].pos.x.toFixed(1) + ", " + v.items[0].pos.y.toFixed(1)) : "";
+      return '<tr><td><span class="sev ' + v.severity + '"></span></td>' +
+        '<td><span class="rule">' + rule + '</span><br><span class="obj">' + desc + (obj ? " — " + obj : "") + '</span></td>' +
+        '<td class="pos">' + pos + '</td></tr>';
+    }).join("");
+  }
+  var ercList = [];
+  D.erc.sheets.forEach(function (sh) {
+    sh.violations.forEach(function (v) {
+      var copy = Object.assign({}, v);
+      copy.description = (sh.path === "/" ? "" : sh.path + " ") + v.description;
+      ercList.push(copy);
+    });
+  });
+  document.getElementById("erc-cnt").textContent = ercN;
+  document.getElementById("drc-cnt").textContent = drcN;
+  renderFindings(document.getElementById("erc-table"), ercList);
+  renderFindings(document.getElementById("drc-table"), D.drc.violations);
+})();
+</script>
+</body>
+</html>

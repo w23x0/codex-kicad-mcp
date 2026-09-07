@@ -1,0 +1,69 @@
+# Copy only the blocks for servers you have installed into
+# ${CODEX_HOME}/config.toml. Replace every placeholder first.
+#
+# This file is an example, not a complete machine configuration. Do not commit
+# the resulting config.toml: it can contain local paths, environment values, or
+# credentials used by other MCP servers.
+
+# The repository's read-first KiCad MCP (Python + uv).
+[mcp_servers.kicad]
+command = "uv"
+args = ["run", "--directory", "C:/path/to/Codex-KiCad/mcp", "codex-kicad-mcp"]
+env = { KICAD_WORKSPACE = "C:/path/to/eda-workspace" }
+
+# Optional LTspice MCP. Use the command documented by the selected upstream
+# release and keep simulation output in a versioned project directory.
+[mcp_servers.ltspice]
+command = "C:/path/to/ltspice-mcp.exe"
+args = []
+env = { LTSPICE_WORKSPACE = "C:/path/to/eda-workspace/simulation" }
+
+# On macOS/Linux, use forward-slash paths and the corresponding executable,
+# for example command = "/path/to/ltspice-mcp". Restart Codex after changing
+# config, then confirm both servers with: codex mcp list
+
+# ---------------------------------------------------------------------------
+# Other MCP hosts
+# ---------------------------------------------------------------------------
+# The same server runs under any stdio MCP client. The block below registers
+# it for Claude Desktop, Visual Studio Code, and Cursor. Every host reads a
+# different config file; keep one block per host file you actually use.
+
+# --- Claude Desktop --------------------------------------------------------
+# File (macOS): ~/Library/Application Support/Claude/claude_desktop_config.json
+# File (Windows): %APPDATA%\Claude\claude_desktop_config.json
+# Place inside the top-level "mcpServers" object:
+#
+# "codex-kicad": {
+#   "command": "uv",
+#   "args": ["run", "--directory", "C:/path/to/Codex-KiCad/mcp", "codex-kicad-mcp"],
+#   "env": { "KICAD_WORKSPACE": "C:/path/to/eda-workspace" }
+# }
+
+# --- Visual Studio Code (settings.json or .vscode/mcp.json) ----------------
+# File: %APPDATA%\Code\User\settings.json under "mcp.servers", or a workspace
+# .vscode/mcp.json committed per project:
+#
+# {
+#   "servers": {
+#     "codex-kicad": {
+#       "type": "stdio",
+#       "command": "uv",
+#       "args": ["run", "--directory", "${workspaceFolder}/../Codex-KiCad/mcp", "codex-kicad-mcp"],
+#       "env": { "KICAD_WORKSPACE": "${workspaceFolder}" }
+#     }
+#   }
+# }
+
+# --- Cursor ----------------------------------------------------------------
+# File: ~/.cursor/mcp.json with the same "mcpServers" shape as Claude Desktop:
+#
+# {
+#   "mcpServers": {
+#     "codex-kicad": {
+#       "command": "uv",
+#       "args": ["run", "--directory", "C:/path/to/Codex-KiCad/mcp", "codex-kicad-mcp"],
+#       "env": { "KICAD_WORKSPACE": "C:/path/to/eda-workspace" }
+#     }
+#   }
+# }

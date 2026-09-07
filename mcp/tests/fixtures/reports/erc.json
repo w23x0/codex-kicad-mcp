@@ -1,0 +1,309 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-07T15:01:40",
+    "ignored_checks": [
+        {
+            "description": "Global label only appears once in the schematic",
+            "key": "single_global_label"
+        },
+        {
+            "description": "Four connection points are joined together",
+            "key": "four_way_junction"
+        },
+        {
+            "description": "SPICE model issue",
+            "key": "simulation_model_issue"
+        },
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/a1b2c3d4-0000-4000-8000-000000000001",
+            "violations": [
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol R1 引脚 1 [Passive, Line]",
+                            "pos": {
+                                "x": 0.5969,
+                                "y": 0.9779
+                            },
+                            "uuid": "a1b2c3d4-0000-4000-8000-00000000002a"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol C1 引脚 1 [Passive, Line]",
+                            "pos": {
+                                "x": 0.635,
+                                "y": 0.8636
+                            },
+                            "uuid": "a1b2c3d4-0000-4000-8000-00000000000a"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U1 引脚 4 [D0, Bidirectional, Line]",
+                            "pos": {
+                                "x": 0.9144,
+                                "y": 0.8636
+                            },
+                            "uuid": "a1b2c3d4-0000-4000-8000-000000000014"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U1 引脚 5 [D1, Bidirectional, Line]",
+                            "pos": {
+                                "x": 0.9144,
+                                "y": 0.889
+                            },
+                            "uuid": "a1b2c3d4-0000-4000-8000-000000000015"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR01 引脚 1 [Power input, Line]",
+                            "pos": {
+                                "x": 1.016,
+                                "y": 0.762
+                            },
+                            "uuid": "a1b2c3d4-0000-4000-8000-000000000032"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR02 引脚 1 [Power input, Line]",
+                            "pos": {
+                                "x": 1.016,
+                                "y": 1.016
+                            },
+                            "uuid": "a1b2c3d4-0000-4000-8000-000000000034"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "层次图纸引脚 '+3V3'",
+                            "pos": {
+                                "x": 1.27,
+                                "y": 1.2065
+                            },
+                            "uuid": "a1b2c3d4-0000-4000-8000-000000000065"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "网络 Net-(U1-D0) 以图形方式连接到总线 /D[1..0], 但不是总线的成员",
+                    "items": [
+                        {
+                            "description": "总线至连线入口",
+                            "pos": {
+                                "x": 0.8636,
+                                "y": 0.889
+                            },
+                            "uuid": "a1b2c3d4-0000-4000-8000-000000000043"
+                        },
+                        {
+                            "description": "垂直总线, 长度 0.0508 mm",
+                            "pos": {
+                                "x": 0.8636,
+                                "y": 0.8636
+                            },
+                            "uuid": "a1b2c3d4-0000-4000-8000-000000000042"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "net_not_bus_member"
+                },
+                {
+                    "description": "网络 Net-(U1-D1) 以图形方式连接到总线 /D[1..0], 但不是总线的成员",
+                    "items": [
+                        {
+                            "description": "总线至连线入口",
+                            "pos": {
+                                "x": 0.8636,
+                                "y": 0.9144
+                            },
+                            "uuid": "a1b2c3d4-0000-4000-8000-000000000044"
+                        },
+                        {
+                            "description": "垂直总线, 长度 0.0508 mm",
+                            "pos": {
+                                "x": 0.8636,
+                                "y": 0.8636
+                            },
+                            "uuid": "a1b2c3d4-0000-4000-8000-000000000042"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "net_not_bus_member"
+                },
+                {
+                    "description": "Label connected to only one pin",
+                    "items": [
+                        {
+                            "description": "标签 'CLK'",
+                            "pos": {
+                                "x": 0.8763,
+                                "y": 0.8382
+                            },
+                            "uuid": "a1b2c3d4-0000-4000-8000-000000000041"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "isolated_pin_label"
+                },
+                {
+                    "description": "类型为 Unspecified 和 Power input 的引脚已连接",
+                    "items": [
+                        {
+                            "description": "引脚 1 [???, ?]",
+                            "pos": {
+                                "x": 1.0668,
+                                "y": 0.762
+                            },
+                            "uuid": "a1b2c3d4-0000-4000-8000-00000000007e"
+                        },
+                        {
+                            "description": "Symbol #PWR01 引脚 1 [Power input, Line]",
+                            "pos": {
+                                "x": 1.016,
+                                "y": 0.762
+                            },
+                            "uuid": "a1b2c3d4-0000-4000-8000-000000000032"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "未连接的连线端点",
+                    "items": [
+                        {
+                            "description": "水平线, 长度 0.0508 mm",
+                            "pos": {
+                                "x": 1.016,
+                                "y": 0.762
+                            },
+                            "uuid": "a1b2c3d4-0000-4000-8000-000000000073"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "unconnected_wire_endpoint"
+                },
+                {
+                    "description": "类型为 Unspecified 和 Power input 的引脚已连接",
+                    "items": [
+                        {
+                            "description": "引脚 1 [???, ?]",
+                            "pos": {
+                                "x": 1.0668,
+                                "y": 1.016
+                            },
+                            "uuid": "a1b2c3d4-0000-4000-8000-00000000007f"
+                        },
+                        {
+                            "description": "Symbol #PWR02 引脚 1 [Power input, Line]",
+                            "pos": {
+                                "x": 1.016,
+                                "y": 1.016
+                            },
+                            "uuid": "a1b2c3d4-0000-4000-8000-000000000034"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "未连接的连线端点",
+                    "items": [
+                        {
+                            "description": "水平线, 长度 0.0508 mm",
+                            "pos": {
+                                "x": 1.016,
+                                "y": 1.016
+                            },
+                            "uuid": "a1b2c3d4-0000-4000-8000-000000000074"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "unconnected_wire_endpoint"
+                }
+            ]
+        },
+        {
+            "path": "/power/",
+            "uuid_path": "/a1b2c3d4-0000-4000-8000-000000000001/a1b2c3d4-0000-4000-8000-000000000064",
+            "violations": [
+                {
+                    "description": "VCC 和 +3V3 都连接到同一项上; 将使用 VCC 作为网表中的网络名称",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR06 引脚 1 [Power input, Line]",
+                            "pos": {
+                                "x": 0.9652,
+                                "y": 0.508
+                            },
+                            "uuid": "a1b2c3d4-0000-4000-8000-000000000068"
+                        },
+                        {
+                            "description": "层次标签 '+3V3'",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 0.508
+                            },
+                            "uuid": "a1b2c3d4-0000-4000-8000-000000000066"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                }
+            ]
+        }
+    ],
+    "source": "demo.kicad_sch"
+}

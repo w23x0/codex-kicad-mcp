@@ -1,0 +1,44 @@
+# Python and local environments
+**/.venv/
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+
+# Build and coverage output
+**/dist/
+**/build/
+**/*.egg-info/
+**/.coverage
+**/htmlcov/
+
+# KiCad and simulator session files
+**/*.kicad_prl
+**/*.kicad_pro-bak
+**/*.kicad_sch-bak
+**/*.kicad_pcb-bak
+**/*.lck
+**/*.raw
+**/*.log
+
+# Local configuration and credentials
+**/.env
+**/.env.*
+!**/.env.example
+**/config.local.toml
+**/auth*.json
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# KiCad check reports and diffs
+**/*.kicad_report
+**/*.kicad_dif
+
+# MCP host local state
+**/.claude/
+**/.python-version
