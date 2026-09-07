@@ -41,7 +41,7 @@ jobs:
         run: pytest mcp/tests --cov=codex_kicad_mcp --cov-report=term-missing -q
       - name: Upload coverage artifact
         if: matrix.os == 'ubuntu-latest' && matrix.python == '3.12'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: coverage-report
           path: .coverage
@@ -105,7 +105,7 @@ jobs:
           python -m pip install build
           python -m build --sdist --wheel mcp
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: dist
           path: mcp/dist/
