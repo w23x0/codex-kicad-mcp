@@ -151,6 +151,8 @@ jobs:
           python -m build --sdist --wheel mcp
       - name: Publish via trusted publishing
         uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: mcp/dist/
       # Trusted publishing requires a one-time "pypi" environment configured
       # on GitHub.  When that is not yet set up (Step 12), publish with a
       # token instead by uncommenting these lines and adding PYPI_TOKEN to
