@@ -52,7 +52,7 @@
   `CODEOWNERS`.
 - Added a `server.main()` smoke test.
 
-## Unreleased
+## 0.2.1 - 2026-09-07
 
 - Migrated to the MCP Python SDK 2.x: `mcp.server.fastmcp.FastMCP` became
   `mcp.server.mcpserver.MCPServer`, annotation fields switched to snake_case,
