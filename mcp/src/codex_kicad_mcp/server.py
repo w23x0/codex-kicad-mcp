@@ -1,6 +1,6 @@
 """Codex KiCad MCP server.
 
-This module is only the registration surface: it declares the FastMCP
+This module is only the registration surface: it declares the MCP server
 instance, the shared read-only tool annotations, and the registered tools.
 Tool logic lives in focused modules for project discovery, S-expression
 extractors, PCB analysis, CLI exports, and ERC/DRC normalization.
@@ -8,7 +8,8 @@ extractors, PCB analysis, CLI exports, and ERC/DRC normalization.
 
 from __future__ import annotations
 
-from mcp.server.fastmcp import FastMCP
+from mcp.server.mcpserver import MCPServer
+from mcp.server.mcpserver.exceptions import ResourceError, ToolError
 from mcp.types import ToolAnnotations
 
 from codex_kicad_mcp import (
@@ -30,25 +31,58 @@ from codex_kicad_mcp.writes import pipeline as writes_pipeline
 # through MCP's ``tools/list`` response and let hosts make safer confirmation
 # decisions without having to infer intent from a docstring.
 _READ_ONLY = ToolAnnotations(
-    readOnlyHint=True,
-    destructiveHint=False,
-    idempotentHint=True,
-    openWorldHint=False,
+    read_only_hint=True,
+    destructive_hint=False,
+    idempotent_hint=True,
+    open_world_hint=False,
 )
 _CLI_READ_ONLY = ToolAnnotations(
-    readOnlyHint=True,
-    destructiveHint=False,
-    idempotentHint=True,
-    openWorldHint=True,
+    read_only_hint=True,
+    destructive_hint=False,
+    idempotent_hint=True,
+    open_world_hint=True,
 )
 _WRITE_MUTATING = ToolAnnotations(
-    readOnlyHint=False,
-    destructiveHint=False,
-    idempotentHint=False,
-    openWorldHint=False,
+    read_only_hint=False,
+    destructive_hint=False,
+    idempotent_hint=False,
+    open_world_hint=False,
 )
 
-mcp = FastMCP(
+
+def _expected(tool_fn):
+    """Wrap a handler so anticipated errors surface as MCP protocol errors.
+
+    The SDK treats a bare ``ValueError``/``RuntimeError`` as a crash: the
+    client sees only a generic "error executing tool" message.  Every error
+    our tool functions raise on purpose carries an actionable message, so the
+    adapters forward it verbatim through ``ToolError``/``ResourceError``
+    (both supported on mcp 2.x; harmless wrappers on 1.x semantics).
+    Unexpected exceptions (bugs) still crash loudly by design.
+    """
+
+    def tool_adapter(*args, **kwargs):
+        try:
+            return tool_fn(*args, **kwargs)
+        except (ValueError, RuntimeError) as exc:
+            raise ToolError(str(exc)) from exc
+
+    return tool_adapter
+
+
+def _expected_resource(resource_fn):
+    # The parameter name must match the URI template's {project}; a generic
+    # *args/**kwargs signature would break the SDK's URI-parameter binding.
+    def resource_adapter(project: str):
+        try:
+            return resource_fn(project)
+        except (ValueError, RuntimeError) as exc:
+            raise ResourceError(str(exc)) from exc
+
+    return resource_adapter
+
+
+mcp = MCPServer(
     "Codex KiCad",
     instructions=(
         "Read-only KiCad project inspection and ERC/DRC checks. All project paths are confined to KICAD_WORKSPACE."
@@ -61,15 +95,31 @@ mcp = FastMCP(
 _URI_SCHEME = "codex-kicad"
 _PROJECT = "{project}"
 _RESOURCE_TEMPLATES = {
-    "manifest": (resources.manifest_resource, None, "Project manifest and file inventory."),
-    "raw": (resources.raw_artifact, None, "Raw bytes of a project artifact (bounded, suffix allowlist)."),
-    "schematic": (resources.schematic_resource, None, "Parsed schematic symbols, labels, wires, and sheets."),
-    "pcb": (resources.pcb_resource, None, "Parsed PCB layers, nets, footprints, tracks, and outline."),
-    "hierarchy": (resources.hierarchy_resource, None, "Parsed schematic sheet hierarchy."),
-    "netlist": (resources.netlist_resource, None, "Freshly exported KiCad netlist (requires kicad-cli)."),
-    "bom": (resources.bom_resource, None, "Freshly exported BOM rows (requires kicad-cli)."),
-    "stackup": (resources.stackup_resource, None, "Parsed or derived board layer stackup."),
-    "report": (resources.report_resource, None, "Normalized local ERC/DRC report findings."),
+    "manifest": (_expected_resource(resources.manifest_resource), None, "Project manifest and file inventory."),
+    "raw": (
+        _expected_resource(resources.raw_artifact),
+        None,
+        "Raw bytes of a project artifact (bounded, suffix allowlist).",
+    ),
+    "schematic": (
+        _expected_resource(resources.schematic_resource),
+        None,
+        "Parsed schematic symbols, labels, wires, and sheets.",
+    ),
+    "pcb": (
+        _expected_resource(resources.pcb_resource),
+        None,
+        "Parsed PCB layers, nets, footprints, tracks, and outline.",
+    ),
+    "hierarchy": (_expected_resource(resources.hierarchy_resource), None, "Parsed schematic sheet hierarchy."),
+    "netlist": (
+        _expected_resource(resources.netlist_resource),
+        None,
+        "Freshly exported KiCad netlist (requires kicad-cli).",
+    ),
+    "bom": (_expected_resource(resources.bom_resource), None, "Freshly exported BOM rows (requires kicad-cli)."),
+    "stackup": (_expected_resource(resources.stackup_resource), None, "Parsed or derived board layer stackup."),
+    "report": (_expected_resource(resources.report_resource), None, "Normalized local ERC/DRC report findings."),
 }
 
 
@@ -132,91 +182,91 @@ def summarize_project_for_handoff_prompt(project: str) -> str:
 @mcp.tool(annotations=_CLI_READ_ONLY)
 def kicad_cli_version() -> dict[str, object]:
     """Return the installed kicad-cli version without touching project files."""
-    return kicad_cli.kicad_cli_version()
+    return _expected(kicad_cli.kicad_cli_version)()
 
 
 @mcp.tool(annotations=_READ_ONLY)
 def list_kicad_projects() -> list[dict[str, str]]:
     """List KiCad project files under the configured workspace."""
-    return project_module.list_kicad_projects()
+    return _expected(project_module.list_kicad_projects)()
 
 
 @mcp.tool(annotations=_READ_ONLY)
 def inspect_project(project: str) -> dict[str, object]:
     """Return a read-only inventory of a KiCad project's related files."""
-    return project_module.inspect_project(project)
+    return _expected(project_module.inspect_project)(project)
 
 
 @mcp.tool(annotations=_READ_ONLY)
 def project_summary(project: str) -> dict[str, object]:
     """Return safe metadata from a KiCad project JSON and related files."""
-    return project_module.project_summary(project)
+    return _expected(project_module.project_summary)(project)
 
 
 @mcp.tool(annotations=_READ_ONLY)
 def read_schematic(project: str) -> dict[str, object]:
     """Read schematic symbol instances, labels, wires, and sheet metadata."""
-    return schematic.read_schematic(project)
+    return _expected(schematic.read_schematic)(project)
 
 
 @mcp.tool(annotations=_READ_ONLY)
 def read_hierarchy(project: str) -> dict[str, object]:
     """Read the schematic sheet hierarchy, sheet pins, and labels."""
-    return hierarchy.read_hierarchy(project)
+    return _expected(hierarchy.read_hierarchy)(project)
 
 
 @mcp.tool(annotations=_READ_ONLY)
 def read_buses(project: str) -> dict[str, object]:
     """Read bus geometry, range labels, and bus entry endpoints."""
-    return hierarchy.read_buses(project)
+    return _expected(hierarchy.read_buses)(project)
 
 
 @mcp.tool(annotations=_CLI_READ_ONLY)
 def read_netlist(project: str) -> dict[str, object]:
     """Export a structured KiCad netlist through kicad-cli and parse it."""
-    return netlist.read_netlist(project)
+    return _expected(netlist.read_netlist)(project)
 
 
 @mcp.tool(annotations=_CLI_READ_ONLY)
 def read_bom(project: str) -> dict[str, object]:
     """Export a BOM through kicad-cli and return normalized rows."""
-    return bom.read_bom(project)
+    return _expected(bom.read_bom)(project)
 
 
 @mcp.tool(annotations=_READ_ONLY)
 def read_pcb(project: str) -> dict[str, object]:
     """Read PCB layers, nets, footprints, tracks, and board outline metadata."""
-    return pcb.read_pcb(project)
+    return _expected(pcb.read_pcb)(project)
 
 
 @mcp.tool(annotations=_READ_ONLY)
 def read_board_metrics(project: str) -> dict[str, object]:
     """Read board size, copper totals, and object counts from the PCB."""
-    return board.read_board_metrics(project)
+    return _expected(board.read_board_metrics)(project)
 
 
 @mcp.tool(annotations=_READ_ONLY)
 def read_layer_stackup(project: str) -> dict[str, object]:
     """Read the embedded stackup or derive a layer list when absent."""
-    return board.read_layer_stackup(project)
+    return _expected(board.read_layer_stackup)(project)
 
 
 @mcp.tool(annotations=_READ_ONLY)
 def read_zones(project: str) -> dict[str, object]:
     """Read copper zones, their polygons, areas, and nets."""
-    return board.read_zones(project)
+    return _expected(board.read_zones)(project)
 
 
 @mcp.tool(annotations=_READ_ONLY)
 def read_vias(project: str) -> dict[str, object]:
     """Read vias with position, drill, layers, and net metadata."""
-    return board.read_vias(project)
+    return _expected(board.read_vias)(project)
 
 
 @mcp.tool(annotations=_CLI_READ_ONLY)
 def run_kicad_cli_check(project: str, check: str = "sch") -> dict[str, object]:
     """Run a read-only KiCad CLI ERC/DRC check for a project."""
-    return kicad_cli.run_kicad_cli_check(project, check)
+    return _expected(kicad_cli.run_kicad_cli_check)(project, check)
 
 
 @mcp.tool(annotations=_CLI_READ_ONLY)
@@ -291,31 +341,31 @@ def check_fabrication_readiness(project: str) -> dict[str, object]:
 @mcp.tool(annotations=_WRITE_MUTATING)
 def preview_write(project: str, op: str, params: dict[str, object] | None = None) -> dict[str, object]:
     """Dry-run a controlled edit and return diffs plus a confirm token."""
-    return writes_pipeline.preview_write(project, op, params)
+    return _expected(writes_pipeline.preview_write)(project, op, params)
 
 
 @mcp.tool(annotations=_WRITE_MUTATING)
 def confirm_write(project: str, plan_hash: str, snapshot_id: str, confirm_token: str) -> dict[str, object]:
     """Execute a previewed write under lock, snapshot, and validation."""
-    return writes_pipeline.confirm_write(project, plan_hash, snapshot_id, confirm_token)
+    return _expected(writes_pipeline.confirm_write)(project, plan_hash, snapshot_id, confirm_token)
 
 
 @mcp.tool(annotations=_WRITE_MUTATING)
 def rollback_snapshot(project: str, snapshot_id: str) -> dict[str, object]:
     """Restore every file captured in a write snapshot."""
-    return writes_pipeline.rollback_snapshot(project, snapshot_id)
+    return _expected(writes_pipeline.rollback_snapshot)(project, snapshot_id)
 
 
 @mcp.tool(annotations=_WRITE_MUTATING)
 def list_snapshots(project: str | None = None) -> dict[str, object]:
     """List write snapshots, newest first, optionally per project."""
-    return writes_pipeline.list_snapshots(project)
+    return _expected(writes_pipeline.list_snapshots)(project)
 
 
 @mcp.tool(annotations=_WRITE_MUTATING)
 def get_write_audit(project: str | None = None, limit: int = 100) -> dict[str, object]:
     """Read the append-only write audit log (optionally per project)."""
-    return writes_pipeline.get_write_audit(project, limit=limit)
+    return _expected(writes_pipeline.get_write_audit)(project, limit=limit)
 
 
 def main() -> None:

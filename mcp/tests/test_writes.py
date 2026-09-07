@@ -6,12 +6,15 @@ import json
 from pathlib import Path
 
 import pytest
+from mcp.server.mcpserver.exceptions import ResourceError, ToolError
 
 from codex_kicad_mcp import server
 from codex_kicad_mcp.writes import pipeline, store
 from codex_kicad_mcp.writes.edits import EditError
 from codex_kicad_mcp.writes.textops import find_child_properties, find_named_blocks, fmt_number, sexpr_escape
 from test_server import workspace  # noqa: F401 - fixture
+
+EXPECTED_ERRORS = (ValueError, RuntimeError, ToolError, ResourceError)
 
 SCHEMATIC = (
     "(kicad_sch (version 20250114)\n"
@@ -377,7 +380,7 @@ def test_server_write_tools_registered():
     for _name, tool in write_tools.items():
         annotations = tool.annotations
         assert annotations is not None
-        assert annotations.readOnlyHint is False
+        assert annotations.read_only_hint is False
 
 
 def test_audit_jsonl_is_append_only_shape(write_workspace):

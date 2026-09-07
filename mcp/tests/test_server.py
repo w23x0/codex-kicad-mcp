@@ -3,8 +3,11 @@ from collections.abc import Callable
 from pathlib import Path
 
 import pytest
+from mcp.server.mcpserver.exceptions import ResourceError, ToolError
 
 from codex_kicad_mcp import diagnostics, kicad_cli, server
+
+EXPECTED_ERRORS = (ValueError, RuntimeError, ToolError, ResourceError)
 
 FIXTURES = Path(__file__).resolve().parents[1] / "tests" / "fixtures" / "demo"
 REPORTS = Path(__file__).resolve().parents[1] / "tests" / "fixtures" / "reports"
@@ -72,26 +75,26 @@ def test_nested_projects_are_relative_and_hidden_trees_are_skipped(workspace):
 
 
 def test_rejects_path_escape(workspace):
-    with pytest.raises(ValueError, match="inside"):
+    with pytest.raises(EXPECTED_ERRORS, match="inside"):
         server.inspect_project("../outside.kicad_pro")
 
 
 def test_requires_workspace(monkeypatch):
     monkeypatch.delenv("KICAD_WORKSPACE", raising=False)
 
-    with pytest.raises(ValueError, match="not configured"):
+    with pytest.raises(EXPECTED_ERRORS, match="not configured"):
         server.list_kicad_projects()
 
 
 def test_project_summary_rejects_invalid_json(workspace):
     (workspace / "demo.kicad_pro").write_text("not-json", encoding="utf-8")
 
-    with pytest.raises(ValueError, match="valid KiCad JSON"):
+    with pytest.raises(EXPECTED_ERRORS, match="valid KiCad JSON"):
         server.project_summary("demo.kicad_pro")
 
 
 def test_check_validates_kind(workspace):
-    with pytest.raises(ValueError, match=r"sch.*pcb"):
+    with pytest.raises(EXPECTED_ERRORS, match=r"sch.*pcb"):
         server.run_kicad_cli_check("demo.kicad_pro", "gerber")
 
 
@@ -369,7 +372,7 @@ def test_parse_check_rejects_malformed_json():
 def test_malformed_schematic_tools(workspace):
     (workspace / "demo.kicad_sch").write_text("(kicad_sch (version 1)", encoding="utf-8")
     for call in (server.read_schematic, server.read_hierarchy, server.read_buses):
-        with pytest.raises(ValueError, match=r"valid KiCad S-expression|unbalanced"):
+        with pytest.raises(EXPECTED_ERRORS, match=r"valid KiCad S-expression|unbalanced"):
             call("demo.kicad_pro")
 
 
@@ -382,7 +385,7 @@ def test_malformed_pcb_tools(workspace):
         server.read_zones,
         server.read_vias,
     ):
-        with pytest.raises(ValueError, match=r"valid KiCad S-expression|unbalanced"):
+        with pytest.raises(EXPECTED_ERRORS, match=r"valid KiCad S-expression|unbalanced"):
             call("demo.kicad_pro")
 
 
@@ -391,7 +394,7 @@ def test_malformed_netlist_export(workspace, monkeypatch):
         output.write_text("(export (components))", encoding="utf-8")
 
     monkeypatch.setattr(kicad_cli.subprocess, "run", fake_cli_writer(write))
-    with pytest.raises(ValueError, match="missing components or nets"):
+    with pytest.raises(EXPECTED_ERRORS, match="missing components or nets"):
         server.read_netlist("demo.kicad_pro")
 
 
@@ -400,7 +403,7 @@ def test_malformed_bom_export(workspace, monkeypatch):
         output.write_text('Reference,Value\n"R1', encoding="utf-8")
 
     monkeypatch.setattr(kicad_cli.subprocess, "run", fake_cli_writer(write))
-    with pytest.raises(ValueError, match="not valid CSV"):
+    with pytest.raises(EXPECTED_ERRORS, match="not valid CSV"):
         server.read_bom("demo.kicad_pro")
 
 

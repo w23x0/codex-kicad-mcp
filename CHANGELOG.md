@@ -54,6 +54,16 @@
 
 ## Unreleased
 
+- Migrated to the MCP Python SDK 2.x: `mcp.server.fastmcp.FastMCP` became
+  `mcp.server.mcpserver.MCPServer`, annotation fields switched to snake_case,
+  resource template fields to `uri_template`/`mime_type`, and anticipated
+  handler errors are now forwarded as `ToolError`/`ResourceError` so clients
+  still see actionable messages instead of a generic crash string. The
+  dependency bound widened to `mcp>=1.9,<3`; the full suite, lint, types,
+  real-project scans, and build were re-verified on 2.x. Migration was
+  forced by an accidentally merged Dependabot constraint bump (#2); the
+  2.x API surface was probed before adapting the registration and tests.
+
 - Normalized all response paths to workspace-relative forward slashes:
   `project.safe_relative`, a new `project.rel_posix` helper, and every
   remaining `relative_to` conversion now emit `as_posix()`, and one

@@ -11,10 +11,13 @@ from __future__ import annotations
 import subprocess
 
 import pytest
+from mcp.server.mcpserver.exceptions import ResourceError, ToolError
 
 from codex_kicad_mcp import config, kicad_cli, project, server
 from codex_kicad_mcp.sexpr import as_float, as_int, parse_sexpr, sexpr_tokens
 from test_server import workspace  # noqa: F401 - fixture
+
+EXPECTED_ERRORS = (ValueError, RuntimeError, ToolError, ResourceError)
 
 # ---------------------------------------------------------------------------
 # S-expression parser limits
@@ -35,7 +38,7 @@ def test_depth_exceeds_limit():
 def test_file_over_max_bytes_is_rejected(workspace, monkeypatch):
     monkeypatch.setenv("KICAD_MAX_FILE_BYTES", "10")
     (workspace / "demo.kicad_sch").write_text("(kicad_sch (version 20231120))", encoding="utf-8")
-    with pytest.raises(ValueError, match="KICAD_MAX_FILE_BYTES"):
+    with pytest.raises(EXPECTED_ERRORS, match="KICAD_MAX_FILE_BYTES"):
         server.read_schematic("demo.kicad_pro")
 
 
@@ -119,7 +122,7 @@ def test_as_int_and_as_float_edges():
 
 def test_check_target_missing_fails(workspace):
     (workspace / "demo.kicad_sch").unlink()
-    with pytest.raises(ValueError, match=r"missing project artifact|must be an existing"):
+    with pytest.raises(EXPECTED_ERRORS, match=r"missing project artifact|must be an existing"):
         server.run_kicad_cli_check("demo.kicad_pro", "sch")
 
 

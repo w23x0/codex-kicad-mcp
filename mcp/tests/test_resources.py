@@ -7,9 +7,12 @@ import json
 from urllib.parse import quote
 
 import pytest
+from mcp.server.mcpserver.exceptions import ResourceError, ToolError
 
 from codex_kicad_mcp import resources, server
 from test_server import demo_workspace, workspace  # noqa: F401 - fixtures
+
+EXPECTED_ERRORS = (ValueError, RuntimeError, ToolError, ResourceError)
 
 # ---------------------------------------------------------------------------
 # Listing (protocol surface)
@@ -31,8 +34,8 @@ def test_resource_templates_listing():
         "project_report",
     }
     for template in templates:
-        assert template.uriTemplate.startswith("codex-kicad://projects/{project}/")
-        assert template.mimeType in {None, "application/json", "text/plain"}
+        assert template.uri_template.startswith("codex-kicad://projects/{project}/")
+        assert template.mime_type in {None, "application/json", "text/plain"}
 
 
 def test_prompts_listing():
@@ -214,14 +217,14 @@ def test_report_resource_stem_fallback_for_gui_default_name(demo_workspace):
 def test_report_resource_invalid_json_raises(demo_workspace):
     (demo_workspace / "erc.json").write_text("not-json", encoding="utf-8")
     try:
-        with pytest.raises(ValueError, match="not valid KiCad JSON"):
+        with pytest.raises(EXPECTED_ERRORS, match="not valid KiCad JSON"):
             _read_raw(_uri(demo_workspace, "demo.kicad_pro", "report"))
     finally:
         (demo_workspace / "erc.json").unlink()
 
 
 def test_report_resource_missing_reports(demo_workspace):
-    with pytest.raises(ValueError, match=r"no erc\.json or drc\.json"):
+    with pytest.raises(EXPECTED_ERRORS, match=r"no erc\.json or drc\.json"):
         asyncio.run(server.mcp.read_resource(_uri(demo_workspace, "demo.kicad_pro", "report")))
 
 
@@ -234,7 +237,7 @@ def test_raw_resource_returns_text(demo_workspace):
 def test_raw_resource_rejects_unknown_suffix(demo_workspace):
     (demo_workspace / "notes.txt").write_text("nope", encoding="utf-8")
     try:
-        with pytest.raises(ValueError, match="only serves"):
+        with pytest.raises(EXPECTED_ERRORS, match="only serves"):
             _read_raw(_uri(demo_workspace, "notes.txt", "raw"))
     finally:
         (demo_workspace / "notes.txt").unlink()
@@ -243,18 +246,18 @@ def test_raw_resource_rejects_unknown_suffix(demo_workspace):
 def test_raw_resource_rejects_missing_file(demo_workspace):
     (demo_workspace / "ghost.kicad_prl").touch()  # disallowed suffix list still applies
     (demo_workspace / "ghost.kicad_prl").unlink()
-    with pytest.raises(ValueError, match=r"inside KICAD_WORKSPACE|does not exist"):
+    with pytest.raises(EXPECTED_ERRORS, match=r"inside KICAD_WORKSPACE|does not exist"):
         asyncio.run(server.mcp.read_resource(_uri(demo_workspace, "ghost.kicad_pro", "raw")))
 
 
 def test_resource_escape_rejected(workspace):
-    with pytest.raises(ValueError):
+    with pytest.raises(EXPECTED_ERRORS):
         asyncio.run(server.mcp.read_resource(_uri(workspace, "../escape.kicad_pro", "manifest")))
 
 
 def test_resource_missing_artifact(workspace):
     (workspace / "demo.kicad_pcb").unlink()
-    with pytest.raises(ValueError, match=r"must stay inside KICAD_WORKSPACE|missing project artifact"):
+    with pytest.raises(EXPECTED_ERRORS, match=r"must stay inside KICAD_WORKSPACE|missing project artifact"):
         asyncio.run(server.mcp.read_resource(_uri(workspace, "demo.kicad_pro", "pcb")))
 
 
