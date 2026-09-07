@@ -33,11 +33,11 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/codex-kicad/Codex-KiCad"
-Repository = "https://github.com/codex-kicad/Codex-KiCad"
-Changelog = "https://github.com/codex-kicad/Codex-KiCad/blob/main/CHANGELOG.md"
-Issues = "https://github.com/codex-kicad/Codex-KiCad/issues"
-Docs = "https://github.com/codex-kicad/Codex-KiCad/tree/main/docs"
+Homepage = "https://github.com/w23x0/codex-kicad-mcp"
+Repository = "https://github.com/w23x0/codex-kicad-mcp"
+Changelog = "https://github.com/w23x0/codex-kicad-mcp/blob/main/CHANGELOG.md"
+Issues = "https://github.com/w23x0/codex-kicad-mcp/issues"
+Docs = "https://github.com/w23x0/codex-kicad-mcp/tree/main/docs"
 
 [project.scripts]
 codex-kicad-mcp = "codex_kicad_mcp.server:main"

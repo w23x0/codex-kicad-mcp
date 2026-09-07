@@ -1,6 +1,6 @@
 # Codex KiCad MCP
 
-[![Validate](https://github.com/codex-kicad/Codex-KiCad/actions/workflows/validate.yml/badge.svg)](https://github.com/codex-kicad/Codex-KiCad/actions/workflows/validate.yml)
+[![Validate](https://github.com/w23x0/codex-kicad-mcp/actions/workflows/validate.yml/badge.svg)](https://github.com/w23x0/codex-kicad-mcp/actions/workflows/validate.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](mcp/pyproject.toml)
 <!-- PyPI badge placeholder: uncomment after v0.2.0 publication (Step 12).
