@@ -3,9 +3,7 @@
 [![Validate](https://github.com/w23x0/codex-kicad-mcp/actions/workflows/validate.yml/badge.svg)](https://github.com/w23x0/codex-kicad-mcp/actions/workflows/validate.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](mcp/pyproject.toml)
-<!-- PyPI badge placeholder: uncomment after v0.2.0 publication (Step 12).
 [![PyPI](https://img.shields.io/pypi/v/codex-kicad-mcp.svg)](https://pypi.org/project/codex-kicad-mcp/)
--->
 
 A read-first [Model Context Protocol](https://modelcontextprotocol.io/) server
 that lets Codex inspect KiCad projects, run review heuristics and ERC/DRC
